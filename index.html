@@ -1,0 +1,448 @@
+import React, { useState, useEffect } from 'react';
+import { Sparkles, Code2, Edit3, Copy, CheckCircle, AlertCircle, Plus, X, Palette } from 'lucide-react';
+
+export default function ArticlePromptGenerator() {
+  const [fields, setFields] = useState({
+    seoTitle: '',
+    mainKeyword: '',
+    ctaPlaceholder: 'Get Started Now',
+    affiliateLink: '',
+    seoDescription: '',
+    pageTitle: '',
+    productName: '',
+    ctaText: 'Click Here',
+    yourUrl: '',
+    moneySiteUrl: '',
+    anchorText: '',
+    additionalLink: '',
+    additionalAnchor: ''
+  });
+
+  const [additionalUrls, setAdditionalUrls] = useState([]);
+  const [colors, setColors] = useState({
+    main: 'blue',
+    accent: 'orange',
+    cta: 'red'
+  });
+
+  const [perplexityInput, setPerplexityInput] = useState('');
+  const [copied, setCopied] = useState(false);
+  const [showPrompt, setShowPrompt] = useState(false);
+  const [parseStatus, setParseStatus] = useState('');
+
+  const handleFieldChange = (field, value) => {
+    setFields(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleColorChange = (colorType, value) => {
+    setColors(prev => ({ ...prev, [colorType]: value }));
+  };
+
+  const addAdditionalUrl = () => {
+    setAdditionalUrls([...additionalUrls, { url: '', anchor: '' }]);
+  };
+
+  const removeAdditionalUrl = (index) => {
+    setAdditionalUrls(additionalUrls.filter((_, i) => i !== index));
+  };
+
+  const updateAdditionalUrl = (index, field, value) => {
+    const updated = [...additionalUrls];
+    updated[index][field] = value;
+    setAdditionalUrls(updated);
+  };
+
+  const parsePerplexityData = () => {
+    setParseStatus('Parsing data...');
+    const text = perplexityInput;
+    const updatedFields = { ...fields };
+    const updatedColors = { ...colors };
+    let foundData = false;
+
+    // Extract SEO Title
+    const seoTitleMatch = text.match(/(?:SEO Title|1\.\s*SEO Title)[:\s]*\n?([^\n]+)/i);
+    if (seoTitleMatch) {
+      updatedFields.seoTitle = seoTitleMatch[1].trim();
+      foundData = true;
+    }
+
+    // Extract SEO Description
+    const seoDescMatch = text.match(/(?:SEO Meta Description|2\.\s*SEO Meta Description)[:\s]*\n?([^\n]+(?:\n[^\n]+)?)/i);
+    if (seoDescMatch) {
+      updatedFields.seoDescription = seoDescMatch[1].trim().replace(/\n/g, ' ');
+      foundData = true;
+    }
+
+    // Extract H1 (Page Title)
+    const h1Match = text.match(/(?:H1:|3\.\s*H1:)\s*([^\n]+)/i);
+    if (h1Match) {
+      updatedFields.pageTitle = h1Match[1].trim();
+      foundData = true;
+    }
+
+    // Extract product/company name from title or H1
+    let productName = '';
+    if (updatedFields.seoTitle) {
+      const productFromTitle = updatedFields.seoTitle.match(/^([^:,\-]+)/);
+      if (productFromTitle) {
+        productName = productFromTitle[1].trim();
+      }
+    } else if (updatedFields.pageTitle) {
+      const productFromH1 = updatedFields.pageTitle.match(/^([^:,\-]+)/);
+      if (productFromH1) {
+        productName = productFromH1[1].trim();
+      }
+    }
+    
+    // Look for company/product name in the text
+    const companyMatch = text.match(/(?:What is|Overview of|About)\s+([A-Z][^?\n.]+)/);
+    if (companyMatch) {
+      productName = companyMatch[1].trim();
+    }
+
+    if (productName) {
+      updatedFields.productName = productName;
+      foundData = true;
+    }
+
+    // Extract main keyword - look for the most mentioned term or extract from title
+    const keywordMatch = text.match(/(?:Key phrases?:|target keyword:|main keyword:)\s*([^,\n]+)/i);
+    if (keywordMatch) {
+      updatedFields.mainKeyword = keywordMatch[1].trim();
+      foundData = true;
+    } else if (productName) {
+      // Use product name as keyword if not found
+      updatedFields.mainKeyword = productName.toLowerCase();
+      foundData = true;
+    }
+
+    // Extract URLs
+    const urlMatches = text.match(/https?:\/\/[^\s\)]+/g);
+    if (urlMatches && urlMatches.length > 0) {
+      updatedFields.affiliateLink = urlMatches[0];
+      updatedFields.yourUrl = urlMatches[0];
+      updatedFields.moneySiteUrl = urlMatches[1] || urlMatches[0];
+      if (urlMatches[2]) {
+        updatedFields.additionalLink = urlMatches[2];
+      }
+      foundData = true;
+    }
+
+    // Set anchor text based on product name
+    if (productName && !updatedFields.anchorText) {
+      updatedFields.anchorText = productName;
+      updatedFields.additionalAnchor = `${productName} Review`;
+    }
+
+    // Extract colors if present
+    const mainColorMatch = text.match(/(?:main color|primary color)[:\s]*([^\n,]+)/i);
+    if (mainColorMatch) {
+      updatedColors.main = mainColorMatch[1].trim().toLowerCase();
+    }
+
+    const accentColorMatch = text.match(/(?:accent color|secondary color)[:\s]*([^\n,]+)/i);
+    if (accentColorMatch) {
+      updatedColors.accent = accentColorMatch[1].trim().toLowerCase();
+    }
+
+    const ctaColorMatch = text.match(/(?:cta color|button color|call.to.action color)[:\s]*([^\n,]+)/i);
+    if (ctaColorMatch) {
+      updatedColors.cta = ctaColorMatch[1].trim().toLowerCase();
+    }
+
+    // Extract target word count
+    const wordCountMatch = text.match(/(\d+,?\d*)\s*(?:--|-)\s*(\d+,?\d*)\s*words/i);
+    if (wordCountMatch) {
+      // Could be used for additional context
+      foundData = true;
+    }
+
+    // Update CTA text based on context
+    if (text.toLowerCase().includes('review')) {
+      updatedFields.ctaText = 'Read Full Review';
+      updatedFields.ctaPlaceholder = 'Get Started Today';
+    }
+
+    setFields(updatedFields);
+    setColors(updatedColors);
+    
+    if (foundData) {
+      setParseStatus('✓ Data parsed successfully!');
+    } else {
+      setParseStatus('⚠ No structured data found. Check your input format.');
+    }
+
+    setTimeout(() => setParseStatus(''), 3000);
+  };
+
+  const generatePrompt = () => {
+    let additionalLinksText = '';
+    if (additionalUrls.length > 0) {
+      additionalLinksText = additionalUrls.map(item => 
+        `\nAlso link to this resource: ${item.url || '(ADDITIONAL URL)'} Using the anchor text ${item.anchor || '(ANCHOR TEXT)'}`
+      ).join('');
+    }
+
+    const prompt = `I want to use this article to build an optimized page for ${fields.seoTitle || '(SEO TITLE - KEYWORD)'}
+On the header section start with the term ${fields.mainKeyword || '(MAIN KEYWORD)'} at the top left and on the right have a call to action button that says "${fields.ctaPlaceholder}" that links to ${fields.affiliateLink || '(AFFILIATE LINK)'}
+ 
+Meta details:
+SEO Title: ${fields.seoTitle || '(SEO TITLE)'}
+SEO Description- ${fields.seoDescription || '(SEO Description)'}
+
+H1 should be the centered with the following: ${fields.pageTitle || '(TITLE OF YOUR PAGE)'}
+
+Then a sentence below it that says
+
+Looking for the best offer for ${fields.productName || '(PRODUCT NAME)'}?
+Then have a call to action button below that says ("${fields.ctaText}") that links to ${fields.yourUrl || '(YOURURL)'} 
+
+Inside the article - use this url ${fields.moneySiteUrl || '(YOUR MONEY SITE URL)'} with the Anchor ${fields.anchorText || '(YOUR DESIRED ANCHOR TEXT)'} in an area that makes sense
+
+Also link to this resource:${fields.additionalLink || '(LINK TO ADDITIONAL CLAUDE CODE PAGE OR HOME PAGE OF MONEY SITE)'} Using the anchor text ${fields.additionalAnchor || '(DESIRED ANCHOR)'}${additionalLinksText}
+
+Use graphs and charts to highlight the offer and benefits to break up the text for better readability.
+
+End the article with another call to action like the one before but without using the H1 - instead use an H2 tag.
+
+Use schema for FAQ and product details
+
+Create this as an artifact that can be published.
+
+The artifact and artifact id should be labeled clearly as ${fields.seoTitle || '(YOUR SEO TITLE)'}
+
+And user interface buttons that you label in the code - use the name ${fields.seoTitle || '(YOUR SEO TITLE)'} as they're name. 
+
+All for organization purposes. 
+
+Use lighter colors like white and gray. The Main Color should be ${colors.main}, with an accent color ${colors.accent}. The CTA should be ${colors.cta}`;
+
+    setShowPrompt(true);
+    return prompt;
+  };
+
+  const copyToClipboard = () => {
+    const prompt = generatePrompt();
+    navigator.clipboard.writeText(prompt);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div className="min-h-screen bg-black text-cyan-400 p-4" style={{
+      backgroundImage: `
+        radial-gradient(circle at 20% 50%, rgba(120, 0, 255, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 0, 120, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(0, 255, 120, 0.2) 0%, transparent 50%)
+      `
+    }}>
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="mb-8 text-center">
+          <h1 className="text-4xl md:text-6xl font-bold mb-2 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+            ARTICLE GENERATOR v1.0
+          </h1>
+          <p className="text-purple-300 text-lg">Review Artifact Prompt Builder</p>
+          <div className="flex justify-center gap-2 mt-4">
+            <Sparkles className="w-5 h-5 text-pink-400 animate-pulse" />
+            <Code2 className="w-5 h-5 text-cyan-400 animate-pulse" />
+            <Sparkles className="w-5 h-5 text-purple-400 animate-pulse" />
+          </div>
+        </div>
+
+        {/* Perplexity Input Section */}
+        <div className="mb-8 bg-gray-900 bg-opacity-80 backdrop-blur-md rounded-lg p-6 border border-purple-500 shadow-lg shadow-purple-500/20">
+          <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+            <AlertCircle className="w-6 h-6 text-pink-400" />
+            Import Perplexity Data
+          </h2>
+          <div className="mb-3 text-sm text-gray-400">
+            <p>Paste your structured data below. The parser will extract:</p>
+            <ul className="list-disc list-inside mt-1 text-cyan-300">
+              <li>SEO Title, Meta Description, H1</li>
+              <li>Product/Company names, Keywords</li>
+              <li>URLs and color preferences</li>
+            </ul>
+          </div>
+          <textarea
+            value={perplexityInput}
+            onChange={(e) => setPerplexityInput(e.target.value)}
+            placeholder="Paste your Perplexity research data here..."
+            className="w-full h-40 bg-black bg-opacity-50 border border-cyan-500 rounded p-3 text-cyan-300 placeholder-gray-600 focus:border-pink-500 focus:outline-none transition-colors font-mono text-sm"
+          />
+          <div className="flex items-center gap-4 mt-3">
+            <button
+              onClick={parsePerplexityData}
+              className="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded hover:from-purple-700 hover:to-pink-700 transition-all duration-300 shadow-lg shadow-purple-500/30"
+            >
+              Parse Data
+            </button>
+            {parseStatus && (
+              <span className={`text-sm ${parseStatus.includes('✓') ? 'text-green-400' : 'text-yellow-400'}`}>
+                {parseStatus}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Color Customization */}
+        <div className="mb-8 bg-gray-900 bg-opacity-80 backdrop-blur-md rounded-lg p-6 border border-cyan-500 shadow-lg shadow-cyan-500/20">
+          <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+            <Palette className="w-6 h-6 text-pink-400" />
+            Color Scheme
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label className="block text-sm font-semibold mb-2 text-purple-300">Main Color</label>
+              <input
+                type="text"
+                value={colors.main}
+                onChange={(e) => handleColorChange('main', e.target.value)}
+                className="w-full bg-black bg-opacity-50 border border-gray-700 rounded px-3 py-2 text-cyan-300 focus:border-cyan-400 focus:outline-none"
+                placeholder="e.g., blue"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold mb-2 text-purple-300">Accent Color</label>
+              <input
+                type="text"
+                value={colors.accent}
+                onChange={(e) => handleColorChange('accent', e.target.value)}
+                className="w-full bg-black bg-opacity-50 border border-gray-700 rounded px-3 py-2 text-cyan-300 focus:border-cyan-400 focus:outline-none"
+                placeholder="e.g., orange"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold mb-2 text-purple-300">CTA Color</label>
+              <input
+                type="text"
+                value={colors.cta}
+                onChange={(e) => handleColorChange('cta', e.target.value)}
+                className="w-full bg-black bg-opacity-50 border border-gray-700 rounded px-3 py-2 text-cyan-300 focus:border-cyan-400 focus:outline-none"
+                placeholder="e.g., red"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Fields Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          {Object.entries({
+            'SEO Title': 'seoTitle',
+            'Main Keyword': 'mainKeyword',
+            'CTA Button Text': 'ctaPlaceholder',
+            'Affiliate Link': 'affiliateLink',
+            'SEO Description': 'seoDescription',
+            'Page Title (H1)': 'pageTitle',
+            'Product Name': 'productName',
+            'CTA Link Text': 'ctaText',
+            'Your URL': 'yourUrl',
+            'Money Site URL': 'moneySiteUrl',
+            'Anchor Text': 'anchorText',
+            'Additional Link': 'additionalLink',
+            'Additional Anchor': 'additionalAnchor'
+          }).map(([label, field]) => (
+            <div key={field} className="bg-gray-900 bg-opacity-60 backdrop-blur-sm rounded-lg p-4 border border-cyan-500 hover:border-pink-500 transition-colors">
+              <label className="block text-sm font-semibold mb-2 text-purple-300 flex items-center gap-2">
+                <Edit3 className="w-4 h-4" />
+                {label}
+              </label>
+              <input
+                type="text"
+                value={fields[field]}
+                onChange={(e) => handleFieldChange(field, e.target.value)}
+                className="w-full bg-black bg-opacity-50 border border-gray-700 rounded px-3 py-2 text-cyan-300 focus:border-cyan-400 focus:outline-none transition-colors"
+                placeholder={`Enter ${label.toLowerCase()}...`}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Additional URLs Section */}
+        <div className="mb-8 bg-gray-900 bg-opacity-80 backdrop-blur-md rounded-lg p-6 border border-purple-500 shadow-lg shadow-purple-500/20">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-bold flex items-center gap-2">
+              <Plus className="w-5 h-5 text-pink-400" />
+              Additional URLs & Anchors
+            </h2>
+            <button
+              onClick={addAdditionalUrl}
+              className="px-4 py-2 bg-gradient-to-r from-green-600 to-cyan-600 text-white font-bold rounded hover:from-green-700 hover:to-cyan-700 transition-all duration-300 flex items-center gap-2"
+            >
+              <Plus className="w-4 h-4" />
+              Add URL
+            </button>
+          </div>
+          
+          {additionalUrls.map((item, index) => (
+            <div key={index} className="flex gap-4 mb-3">
+              <input
+                type="text"
+                value={item.url}
+                onChange={(e) => updateAdditionalUrl(index, 'url', e.target.value)}
+                className="flex-1 bg-black bg-opacity-50 border border-gray-700 rounded px-3 py-2 text-cyan-300 focus:border-cyan-400 focus:outline-none"
+                placeholder="URL"
+              />
+              <input
+                type="text"
+                value={item.anchor}
+                onChange={(e) => updateAdditionalUrl(index, 'anchor', e.target.value)}
+                className="flex-1 bg-black bg-opacity-50 border border-gray-700 rounded px-3 py-2 text-cyan-300 focus:border-cyan-400 focus:outline-none"
+                placeholder="Anchor Text"
+              />
+              <button
+                onClick={() => removeAdditionalUrl(index)}
+                className="px-3 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          ))}
+        </div>
+
+        {/* Generate Button */}
+        <div className="text-center mb-8">
+          <button
+            onClick={generatePrompt}
+            className="px-8 py-3 bg-gradient-to-r from-cyan-600 to-purple-600 text-white font-bold text-lg rounded-lg hover:from-cyan-700 hover:to-purple-700 transition-all duration-300 shadow-xl shadow-cyan-500/30 transform hover:scale-105"
+          >
+            GENERATE PROMPT
+          </button>
+        </div>
+
+        {/* Generated Prompt Display */}
+        {showPrompt && (
+          <div className="bg-gray-900 bg-opacity-80 backdrop-blur-md rounded-lg p-6 border border-pink-500 shadow-lg shadow-pink-500/20">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-2xl font-bold text-pink-400">Generated Prompt</h3>
+              <button
+                onClick={copyToClipboard}
+                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-600 to-cyan-600 text-white font-bold rounded hover:from-green-700 hover:to-cyan-700 transition-all duration-300"
+              >
+                {copied ? (
+                  <>
+                    <CheckCircle className="w-5 h-5" />
+                    Copied!
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-5 h-5" />
+                    Copy to Clipboard
+                  </>
+                )}
+              </button>
+            </div>
+            <pre className="bg-black bg-opacity-50 rounded p-4 text-cyan-300 text-sm overflow-x-auto whitespace-pre-wrap border border-gray-700">
+              {generatePrompt()}
+            </pre>
+          </div>
+        )}
+
+        {/* Footer */}
+        <div className="mt-12 text-center text-gray-500 text-sm">
+          <p>Article Generator v1.0 | Review Artifact Builder</p>
+        </div>
+      </div>
+    </div>
+  );
+}
