@@ -64,7 +64,23 @@
                 additionalAnchor: ''
             });
 
+            const [listicleFields, setListicleFields] = useState({
+                seoTitle: '',
+                seoDescription: '',
+                mainKeyword: '',
+                h1Title: '',
+                topProducts: [
+                    { url: '', anchor: '' },
+                    { url: '', anchor: '' },
+                    { url: '', anchor: '' }
+                ],
+                additionalUrl: '',
+                additionalAnchor: ''
+            });
+
             const [additionalUrls, setAdditionalUrls] = useState([]);
+            const [listicleAdditionalUrls, setListicleAdditionalUrls] = useState([]);
+            const [additionalProducts, setAdditionalProducts] = useState([]);
             const [colors, setColors] = useState({
                 main: 'blue',
                 accent: 'orange',
@@ -72,6 +88,7 @@
             });
 
             const [perplexityInput, setPerplexityInput] = useState('');
+            const [listicleInput, setListicleInput] = useState('');
             const [copied, setCopied] = useState(false);
             const [showPrompt, setShowPrompt] = useState(false);
             const [parseStatus, setParseStatus] = useState('');
@@ -283,18 +300,39 @@
                     borderRadius: '4px',
                     color: '#EC4899',
                     marginLeft: '8px'
+                },
+                productGrid: {
+                    display: 'grid',
+                    gap: '16px',
+                    marginTop: '16px'
+                },
+                productItem: {
+                    background: 'rgba(17, 24, 39, 0.6)',
+                    borderRadius: '8px',
+                    padding: '16px',
+                    border: '1px solid #00D9FF'
                 }
             };
 
             const promptTypes = [
                 { id: 'review', name: 'Review', icon: 'fileText', available: true },
-                { id: 'listicle', name: 'Listicle', icon: 'list', available: false },
+                { id: 'listicle', name: 'Listicle', icon: 'list', available: true },
                 { id: 'informational', name: 'Informational', icon: 'info', available: false },
                 { id: 'local', name: 'Local', icon: 'mapPin', available: false }
             ];
 
             const handleFieldChange = (field, value) => {
                 setFields(prev => ({ ...prev, [field]: value }));
+            };
+
+            const handleListicleFieldChange = (field, value) => {
+                setListicleFields(prev => ({ ...prev, [field]: value }));
+            };
+
+            const handleTopProductChange = (index, field, value) => {
+                const updated = [...listicleFields.topProducts];
+                updated[index][field] = value;
+                setListicleFields(prev => ({ ...prev, topProducts: updated }));
             };
 
             const handleColorChange = (colorType, value) => {
@@ -313,6 +351,34 @@
                 const updated = [...additionalUrls];
                 updated[index][field] = value;
                 setAdditionalUrls(updated);
+            };
+
+            const addListicleAdditionalUrl = () => {
+                setListicleAdditionalUrls([...listicleAdditionalUrls, { url: '', anchor: '' }]);
+            };
+
+            const removeListicleAdditionalUrl = (index) => {
+                setListicleAdditionalUrls(listicleAdditionalUrls.filter((_, i) => i !== index));
+            };
+
+            const updateListicleAdditionalUrl = (index, field, value) => {
+                const updated = [...listicleAdditionalUrls];
+                updated[index][field] = value;
+                setListicleAdditionalUrls(updated);
+            };
+
+            const addAdditionalProduct = () => {
+                setAdditionalProducts([...additionalProducts, { url: '', anchor: '' }]);
+            };
+
+            const removeAdditionalProduct = (index) => {
+                setAdditionalProducts(additionalProducts.filter((_, i) => i !== index));
+            };
+
+            const updateAdditionalProduct = (index, field, value) => {
+                const updated = [...additionalProducts];
+                updated[index][field] = value;
+                setAdditionalProducts(updated);
             };
 
             const parsePerplexityData = () => {
@@ -430,6 +496,87 @@
                 setTimeout(() => setParseStatus(''), 3000);
             };
 
+            const parseListicleData = () => {
+                setParseStatus('Parsing listicle data...');
+                const text = listicleInput;
+                const updatedFields = { ...listicleFields };
+                let foundData = false;
+
+                // Extract SEO Title
+                const seoTitleMatch = text.match(/SEO Title[:\s]*\n?([^\n]+)/i);
+                if (seoTitleMatch) {
+                    updatedFields.seoTitle = seoTitleMatch[1].trim();
+                    foundData = true;
+                }
+
+                // Extract SEO Description
+                const seoDescMatch = text.match(/SEO (?:Meta )?Description[:\s]*\n?([^\n]+(?:\n[^\n]+)?)/i);
+                if (seoDescMatch) {
+                    updatedFields.seoDescription = seoDescMatch[1].trim().replace(/\n/g, ' ');
+                    foundData = true;
+                }
+
+                // Extract H1
+                const h1Match = text.match(/H1[:\s]*([^\n]+)/i);
+                if (h1Match) {
+                    updatedFields.h1Title = h1Match[1].trim();
+                    foundData = true;
+                }
+
+                // Extract main keyword from key phrases or context
+                const keywordMatch = text.match(/Key phrase[s]?[:\s]*"([^"]+)"/i) ||
+                                   text.match(/keyword\s*"([^"]+)"/i) ||
+                                   text.match(/(?:for|to rank for)\s*"([^"]+)"/i);
+                if (keywordMatch) {
+                    updatedFields.mainKeyword = keywordMatch[1];
+                    foundData = true;
+                } else if (updatedFields.seoTitle) {
+                    // Try to extract from SEO title
+                    const titleKeyword = updatedFields.seoTitle.match(/^([^:,\-]+)/);
+                    if (titleKeyword) {
+                        updatedFields.mainKeyword = titleKeyword[1].trim().toLowerCase();
+                    }
+                }
+
+                // Extract affiliate link
+                const affiliateLinkMatch = text.match(/affiliate link is\s*(https?:\/\/[^\s]+)/i);
+                if (affiliateLinkMatch) {
+                    // This will be used to construct the top product URLs
+                    const baseAffiliateUrl = affiliateLinkMatch[1];
+                    
+                    // Extract company names from H3 headers
+                    const h3Matches = text.match(/H3:\s*([^\n]+?)(?:\s*Review)?/gi);
+                    if (h3Matches && h3Matches.length >= 3) {
+                        h3Matches.slice(0, 3).forEach((match, index) => {
+                            const companyName = match.replace(/H3:\s*/i, '').replace(/\s*Review$/i, '').trim();
+                            updatedFields.topProducts[index] = {
+                                url: baseAffiliateUrl,
+                                anchor: companyName
+                            };
+                        });
+                        foundData = true;
+                    }
+                }
+
+                // Extract additional URLs if mentioned
+                const additionalUrlMatches = text.match(/(?:Also link to|link to this resource)[:\s]*([^\s]+)\s*(?:Using|with)\s*(?:the )?anchor text\s*([^\n]+)/i);
+                if (additionalUrlMatches) {
+                    updatedFields.additionalUrl = additionalUrlMatches[1];
+                    updatedFields.additionalAnchor = additionalUrlMatches[2].trim();
+                    foundData = true;
+                }
+
+                setListicleFields(updatedFields);
+                
+                if (foundData) {
+                    setParseStatus('✓ Listicle data parsed successfully!');
+                } else {
+                    setParseStatus('⚠ No structured data found. Check your input format.');
+                }
+
+                setTimeout(() => setParseStatus(''), 3000);
+            };
+
             const generateReviewPrompt = () => {
                 let additionalLinksText = '';
                 if (additionalUrls.length > 0) {
@@ -473,6 +620,61 @@ All for organization purposes.
 Use lighter colors like white and gray. The Main Color should be ${colors.main}, with an accent color ${colors.accent}. The CTA should be ${colors.cta}`;
             };
 
+            const generateListiclePrompt = () => {
+                // Build top 3 products text
+                let topProductsText = '';
+                listicleFields.topProducts.forEach((product, index) => {
+                    if (product.url || product.anchor) {
+                        topProductsText += `\n${product.url || '(URL ' + (index + 1) + ')'} ${product.anchor || '(ANCHOR ' + (index + 1) + ')'}`;
+                    }
+                });
+
+                // Add additional products to the list
+                additionalProducts.forEach((product, index) => {
+                    if (product.url || product.anchor) {
+                        topProductsText += `\n${product.url || '(ADDITIONAL PRODUCT URL ' + (index + 1) + ')'} ${product.anchor || '(ADDITIONAL PRODUCT ANCHOR ' + (index + 1) + ')'}`;
+                    }
+                });
+
+                // Build additional URLs text
+                let additionalLinksText = '';
+                if (listicleFields.additionalUrl || listicleFields.additionalAnchor) {
+                    additionalLinksText = `\n\nPlease also insert this URL ${listicleFields.additionalUrl || '(YOUR URL)'} with this ${listicleFields.additionalAnchor || '(ANCHOR)'} where it makes sense`;
+                }
+                
+                if (listicleAdditionalUrls.length > 0) {
+                    listicleAdditionalUrls.forEach(item => {
+                        if (item.url || item.anchor) {
+                            additionalLinksText += `\n\nPlease also insert this URL ${item.url || '(URL)'} with this ${item.anchor || '(ANCHOR)'} where it makes sense`;
+                        }
+                    });
+                }
+
+                return `Now I want to use that same article to build an SEO optimized page artifact with the following: 
+
+SEO Title: ${listicleFields.seoTitle || '(From Perplexity)'} 
+SEO description: ${listicleFields.seoDescription || '(from Perplexity)'}
+
+On the header section start with the term ${listicleFields.mainKeyword || '(PRIMARY MAIN KEYWORD-Not the suggested title)'} at the top left. 
+
+H1 should be the centered with the following: ${listicleFields.h1Title || '(H1 Title from Perplexity)'}
+
+Have the top 3 with the  "Add to Cart" that links to urls listed at the bottom of this like you'd see with an affiliate top rated page with stars. 
+
+Keep the colors light and gray. Main colors should be ${colors.main}, accent color ${colors.accent} and CTA ${colors.cta}.
+
+Use tables to help with readability and highlight important points of the article. 
+
+Use Schema for FAQ and pricing details.
+
+Be sure to name the artifact and artifact id the following: ${listicleFields.seoTitle || '(YOUR SEO TITLE)'}
+
+This is for our organization purposes
+
+Here are links for the top rated products:
+${topProductsText || '\n{your url} {your anchor}\n{your url} {your anchor}\n{your url} {your anchor}'}${additionalLinksText}`;
+            };
+
             const handleGeneratePrompt = () => {
                 let prompt = '';
                 
@@ -481,8 +683,7 @@ Use lighter colors like white and gray. The Main Color should be ${colors.main},
                         prompt = generateReviewPrompt();
                         break;
                     case 'listicle':
-                        // Placeholder for listicle prompt
-                        prompt = 'Listicle prompt generator coming soon...';
+                        prompt = generateListiclePrompt();
                         break;
                     case 'informational':
                         // Placeholder for informational prompt
@@ -546,7 +747,7 @@ Use lighter colors like white and gray. The Main Color should be ${colors.main},
                             })}
                         </div>
 
-                        {/* Only show Review content for now */}
+                        {/* Review Content */}
                         {promptType === 'review' && (
                             <>
                                 {/* Perplexity Input Section */}
@@ -715,8 +916,295 @@ Use lighter colors like white and gray. The Main Color should be ${colors.main},
                             </>
                         )}
 
+                        {/* Listicle Content */}
+                        {promptType === 'listicle' && (
+                            <>
+                                {/* Listicle Input Section */}
+                                <div style={styles.section}>
+                                    <h2 style={styles.sectionTitle}>
+                                        <Icon type="list" size={24} color="#EC4899" />
+                                        Import Listicle Data
+                                    </h2>
+                                    <div style={{ marginBottom: '12px', fontSize: '14px', color: '#9CA3AF' }}>
+                                        <p>Paste your listicle article data below. The parser will extract:</p>
+                                        <ul style={{ listStyle: 'disc', listStylePosition: 'inside', marginTop: '4px', color: '#00D9FF' }}>
+                                            <li>SEO Title & Description</li>
+                                            <li>H1 Title and Main Keyword</li>
+                                            <li>Top 3 Product Names</li>
+                                            <li>Affiliate and Additional URLs</li>
+                                        </ul>
+                                    </div>
+                                    <textarea
+                                        value={listicleInput}
+                                        onChange={(e) => setListicleInput(e.target.value)}
+                                        placeholder="Paste your listicle article data here..."
+                                        style={styles.textarea}
+                                    />
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '12px' }}>
+                                        <button
+                                            onClick={parseListicleData}
+                                            style={styles.button}
+                                            onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
+                                            onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                                        >
+                                            Parse Data
+                                        </button>
+                                        {parseStatus && (
+                                            <span style={{ 
+                                                fontSize: '14px', 
+                                                color: parseStatus.includes('✓') ? '#10B981' : '#FBBF24' 
+                                            }}>
+                                                {parseStatus}
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Color Customization */}
+                                <div style={styles.sectionCyan}>
+                                    <h2 style={styles.sectionTitle}>
+                                        <Icon type="palette" size={24} color="#EC4899" />
+                                        Color Scheme
+                                    </h2>
+                                    <div style={styles.colorGrid}>
+                                        <div>
+                                            <label style={styles.label}>Main Color</label>
+                                            <input
+                                                type="text"
+                                                value={colors.main}
+                                                onChange={(e) => handleColorChange('main', e.target.value)}
+                                                style={styles.input}
+                                                placeholder="e.g., blue"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label style={styles.label}>Accent Color</label>
+                                            <input
+                                                type="text"
+                                                value={colors.accent}
+                                                onChange={(e) => handleColorChange('accent', e.target.value)}
+                                                style={styles.input}
+                                                placeholder="e.g., orange"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label style={styles.label}>CTA Color</label>
+                                            <input
+                                                type="text"
+                                                value={colors.cta}
+                                                onChange={(e) => handleColorChange('cta', e.target.value)}
+                                                style={styles.input}
+                                                placeholder="e.g., red"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Basic Fields */}
+                                <div style={styles.grid}>
+                                    <div style={styles.gridItem}>
+                                        <label style={styles.label}>
+                                            <Icon type="edit3" size={16} />
+                                            SEO Title
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={listicleFields.seoTitle}
+                                            onChange={(e) => handleListicleFieldChange('seoTitle', e.target.value)}
+                                            style={styles.input}
+                                            placeholder="From Perplexity"
+                                        />
+                                    </div>
+                                    <div style={styles.gridItem}>
+                                        <label style={styles.label}>
+                                            <Icon type="edit3" size={16} />
+                                            SEO Description
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={listicleFields.seoDescription}
+                                            onChange={(e) => handleListicleFieldChange('seoDescription', e.target.value)}
+                                            style={styles.input}
+                                            placeholder="From Perplexity"
+                                        />
+                                    </div>
+                                    <div style={styles.gridItem}>
+                                        <label style={styles.label}>
+                                            <Icon type="edit3" size={16} />
+                                            Main Keyword
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={listicleFields.mainKeyword}
+                                            onChange={(e) => handleListicleFieldChange('mainKeyword', e.target.value)}
+                                            style={styles.input}
+                                            placeholder="Primary keyword (not the title)"
+                                        />
+                                    </div>
+                                    <div style={styles.gridItem}>
+                                        <label style={styles.label}>
+                                            <Icon type="edit3" size={16} />
+                                            H1 Title
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={listicleFields.h1Title}
+                                            onChange={(e) => handleListicleFieldChange('h1Title', e.target.value)}
+                                            style={styles.input}
+                                            placeholder="From Perplexity"
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Top 3 Products Section */}
+                                <div style={styles.section}>
+                                    <h2 style={styles.sectionTitle}>
+                                        <Icon type="list" size={20} color="#EC4899" />
+                                        Top 3 Products
+                                    </h2>
+                                    <div style={styles.productGrid}>
+                                        {listicleFields.topProducts.map((product, index) => (
+                                            <div key={index} style={styles.productItem}>
+                                                <h3 style={{ fontSize: '16px', marginBottom: '12px', color: '#EC4899' }}>
+                                                    Product #{index + 1}
+                                                </h3>
+                                                <div style={{ display: 'flex', gap: '16px' }}>
+                                                    <input
+                                                        type="text"
+                                                        value={product.url}
+                                                        onChange={(e) => handleTopProductChange(index, 'url', e.target.value)}
+                                                        style={{ ...styles.input, flex: 1 }}
+                                                        placeholder="Product URL"
+                                                    />
+                                                    <input
+                                                        type="text"
+                                                        value={product.anchor}
+                                                        onChange={(e) => handleTopProductChange(index, 'anchor', e.target.value)}
+                                                        style={{ ...styles.input, flex: 1 }}
+                                                        placeholder="Product Name/Anchor"
+                                                    />
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Additional Products Section */}
+                                <div style={styles.section}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                                        <h2 style={{ ...styles.sectionTitle, marginBottom: 0 }}>
+                                            <Icon type="plus" size={20} color="#EC4899" />
+                                            Additional Products
+                                        </h2>
+                                        <button
+                                            onClick={addAdditionalProduct}
+                                            style={{ ...styles.button, background: 'linear-gradient(to right, #059669, #0891B2)' }}
+                                            onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
+                                            onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                                        >
+                                            <Icon type="plus" size={16} style={{ display: 'inline', marginRight: '4px' }} />
+                                            Add Product
+                                        </button>
+                                    </div>
+                                    
+                                    {additionalProducts.map((item, index) => (
+                                        <div key={index} style={styles.additionalUrlRow}>
+                                            <input
+                                                type="text"
+                                                value={item.url}
+                                                onChange={(e) => updateAdditionalProduct(index, 'url', e.target.value)}
+                                                style={{ ...styles.input, flex: 1 }}
+                                                placeholder="Product URL"
+                                            />
+                                            <input
+                                                type="text"
+                                                value={item.anchor}
+                                                onChange={(e) => updateAdditionalProduct(index, 'anchor', e.target.value)}
+                                                style={{ ...styles.input, flex: 1 }}
+                                                placeholder="Product Name"
+                                            />
+                                            <button
+                                                onClick={() => removeAdditionalProduct(index)}
+                                                style={styles.removeButton}
+                                            >
+                                                <Icon type="x" size={16} />
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {/* Additional Links Section */}
+                                <div style={styles.section}>
+                                    <h2 style={styles.sectionTitle}>
+                                        <Icon type="plus" size={20} color="#EC4899" />
+                                        Additional Link
+                                    </h2>
+                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                                        <input
+                                            type="text"
+                                            value={listicleFields.additionalUrl}
+                                            onChange={(e) => handleListicleFieldChange('additionalUrl', e.target.value)}
+                                            style={styles.input}
+                                            placeholder="Additional URL"
+                                        />
+                                        <input
+                                            type="text"
+                                            value={listicleFields.additionalAnchor}
+                                            onChange={(e) => handleListicleFieldChange('additionalAnchor', e.target.value)}
+                                            style={styles.input}
+                                            placeholder="Anchor Text"
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Extra Additional URLs */}
+                                <div style={styles.section}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                                        <h2 style={{ ...styles.sectionTitle, marginBottom: 0 }}>
+                                            <Icon type="plus" size={20} color="#EC4899" />
+                                            Extra URLs & Anchors
+                                        </h2>
+                                        <button
+                                            onClick={addListicleAdditionalUrl}
+                                            style={{ ...styles.button, background: 'linear-gradient(to right, #059669, #0891B2)' }}
+                                            onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
+                                            onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                                        >
+                                            <Icon type="plus" size={16} style={{ display: 'inline', marginRight: '4px' }} />
+                                            Add URL
+                                        </button>
+                                    </div>
+                                    
+                                    {listicleAdditionalUrls.map((item, index) => (
+                                        <div key={index} style={styles.additionalUrlRow}>
+                                            <input
+                                                type="text"
+                                                value={item.url}
+                                                onChange={(e) => updateListicleAdditionalUrl(index, 'url', e.target.value)}
+                                                style={{ ...styles.input, flex: 1 }}
+                                                placeholder="URL"
+                                            />
+                                            <input
+                                                type="text"
+                                                value={item.anchor}
+                                                onChange={(e) => updateListicleAdditionalUrl(index, 'anchor', e.target.value)}
+                                                style={{ ...styles.input, flex: 1 }}
+                                                placeholder="Anchor Text"
+                                            />
+                                            <button
+                                                onClick={() => removeListicleAdditionalUrl(index)}
+                                                style={styles.removeButton}
+                                            >
+                                                <Icon type="x" size={16} />
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </>
+                        )}
+
                         {/* Coming Soon Message for other types */}
-                        {promptType !== 'review' && (
+                        {(promptType === 'informational' || promptType === 'local') && (
                             <div style={{ ...styles.section, textAlign: 'center', padding: '60px' }}>
                                 <h2 style={{ fontSize: '2rem', marginBottom: '16px', color: '#EC4899' }}>
                                     {promptType.charAt(0).toUpperCase() + promptType.slice(1)} Prompt Generator
