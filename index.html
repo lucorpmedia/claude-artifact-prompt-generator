@@ -378,8 +378,8 @@
             const promptTypes = [
                 { id: 'review', name: 'Review', icon: 'fileText', available: true },
                 { id: 'listicle', name: 'Listicle', icon: 'list', available: true },
-                { id: 'informational', name: 'Informational', icon: 'info', available: false },
-                { id: 'local', name: 'Local', icon: 'mapPin', available: false }
+                { id: 'informational', name: 'Informational', icon: 'info', available: true },
+                { id: 'local', name: 'Local', icon: 'mapPin', available: true }
             ];
 
             const handleFieldChange = (field, value) => {
@@ -638,6 +638,77 @@
                 setTimeout(() => setParseStatus(''), 3000);
             };
 
+            // Common prompts section for all types
+            const getCommonPrompts = (mainColor = colors.main, accentColor = colors.accent, topicName = '') => {
+                return `
+
+**"ACCESSIBILITY & CONTRAST REQUIREMENTS: Ensure all text maintains proper contrast ratios for readability. Automatically apply the following rules:
+
+Dark backgrounds (blues, blacks, grays, dark colors): Use WHITE or very light text (#ffffff or #f8f9fa)
+Light backgrounds (whites, light grays, pastels): Use DARK text (#1f2937 or #374151)
+Medium backgrounds: Test contrast and choose appropriate light or dark text
+Colored containers: Always prioritize legibility over aesthetics - if background is dark/saturated, use white text; if light/pale, use dark text
+Interactive elements: Ensure hover states maintain proper contrast
+Minimum contrast ratio: Follow WCAG AA standards (4.5:1 for normal text, 3:1 for large text)
+
+Apply these rules automatically to ALL text elements including headings, paragraphs, links, and labels within any colored containers or sections. Use color: white !important; or color: #1f2937 !important; when needed to override conflicting styles."**
+
+"Create a visually appealing Key Takeaways section for ${topicName || '[TOPIC/PRODUCT NAME]'} with the following specifications:
+Design Requirements:
+
+Boxed section with gradient background and colored border
+Grid layout that's mobile responsive
+Each takeaway should have an icon + content format
+Include a prominent "Bottom Line" summary box at the end
+Use ${mainColor} as main color, ${accentColor} as secondary
+Ensure proper contrast ratios for accessibility
+
+Content Structure:
+
+4-6 key takeaways covering the most important points about ${topicName || '[TOPIC]'}
+Each takeaway should have: relevant emoji/icon, bold heading, brief explanation
+Bottom line should summarize the overall conclusion/recommendation
+
+Styling Preferences:
+
+Professional, clean design
+Card-based layout for individual takeaways
+Proper spacing and typography
+Matches overall site aesthetic
+Works well on mobile devices
+
+Data to highlight: [List 4-6 specific points you want emphasized]
+Target audience: [Who this is for - investors, consumers, etc.]
+
+Use graphs and charts to highlight the offer and benefits to break up the text for better readability.
+
+Create pure CSS-based visual charts (no Chart.js or external libraries) that display actual data values. Requirements:
+
+Chart Types Needed: [specify: bar charts, pie charts, line charts, progress bars, etc.]
+Data to Display: [your specific data points and values]
+Height Limit: Maximum 200px container height, compact design
+Colors: [specify your color scheme - e.g., "${mainColor} primary, ${accentColor} accent, ${colors.cta} CTA"]
+Chart Features:
+
+Display real data values/percentages on the charts
+Responsive design (mobile-friendly)
+Clean labels and legends
+Professional appearance
+
+
+Layout: [specify: side-by-side grid, single column, etc.]
+
+Use only HTML/CSS with:
+
+CSS bar charts (with width percentages for data)
+CSS pie charts (using conic-gradient)
+CSS line charts (with visual points)
+CSS progress bars (showing percentages)
+Proper labels, colors, and data values visible
+
+No JavaScript charting libraries - pure CSS visual charts only.`;
+            };
+
             const generateReviewPrompt = () => {
                 let additionalLinksText = '';
                 if (additionalUrls.length > 0) {
@@ -663,45 +734,7 @@ Then have a call to action button below that says ("${fields.ctaText}") that lin
 Inside the article - use this url ${fields.moneySiteUrl || '(YOUR MONEY SITE URL)'} with the Anchor ${fields.anchorText || '(YOUR DESIRED ANCHOR TEXT)'} in an area that makes sense
 
 Also link to this resource:${fields.additionalLink || '(LINK TO ADDITIONAL CLAUDE CODE PAGE OR HOME PAGE OF MONEY SITE)'} Using the anchor text ${fields.additionalAnchor || '(DESIRED ANCHOR)'}${additionalLinksText}
-
-**"ACCESSIBILITY & CONTRAST REQUIREMENTS: Ensure all text maintains proper contrast ratios for readability. Automatically apply the following rules:
-
-Dark backgrounds (blues, blacks, grays, dark colors): Use WHITE or very light text (#ffffff or #f8f9fa)
-Light backgrounds (whites, light grays, pastels): Use DARK text (#1f2937 or #374151)
-Medium backgrounds: Test contrast and choose appropriate light or dark text
-Colored containers: Always prioritize legibility over aesthetics - if background is dark/saturated, use white text; if light/pale, use dark text
-Interactive elements: Ensure hover states maintain proper contrast
-Minimum contrast ratio: Follow WCAG AA standards (4.5:1 for normal text, 3:1 for large text)
-
-Apply these rules automatically to ALL text elements including headings, paragraphs, links, and labels within any colored containers or sections. Use color: white !important; or color: #1f2937 !important; when needed to override conflicting styles."**
-
-Use graphs and charts to highlight the offer and benefits to break up the text for better readability.
-
-Create pure CSS-based visual charts (no Chart.js or external libraries) that display actual data values. Requirements:
-
-Chart Types Needed: [specify: bar charts, pie charts, line charts, progress bars, etc.]
-Data to Display: [your specific data points and values]
-Height Limit: Maximum 200px container height, compact design
-Colors: [specify your color scheme - e.g., "blue primary, orange accent, red CTA"]
-Chart Features:
-
-Display real data values/percentages on the charts
-Responsive design (mobile-friendly)
-Clean labels and legends
-Professional appearance
-
-
-Layout: [specify: side-by-side grid, single column, etc.]
-
-Use only HTML/CSS with:
-
-CSS bar charts (with width percentages for data)
-CSS pie charts (using conic-gradient)
-CSS line charts (with visual points)
-CSS progress bars (showing percentages)
-Proper labels, colors, and data values visible
-
-No JavaScript charting libraries - pure CSS visual charts only.
+${getCommonPrompts(colors.main, colors.accent, fields.productName)}
 
 End the article with another call to action like the one before but without using the H1 - instead use an H2 tag.
 
@@ -760,6 +793,7 @@ H1 should be the centered with the following: ${listicleFields.h1Title || '(H1 T
 Have the top 3 with the  "Add to Cart" that links to urls listed at the bottom of this like you'd see with an affiliate top rated page with stars. 
 
 Keep the colors light and gray. Main colors should be ${colors.main}, accent color ${colors.accent} and CTA ${colors.cta}.
+${getCommonPrompts(colors.main, colors.accent, listicleFields.mainKeyword)}
 
 Use tables to help with readability and highlight important points of the article. 
 
@@ -773,6 +807,69 @@ Here are links for the top rated products:
 ${topProductsText || '\n{your url} {your anchor}\n{your url} {your anchor}\n{your url} {your anchor}'}${additionalLinksText}`;
             };
 
+            const generateInformationalPrompt = () => {
+                return `I want to create an informational article page for ${fields.seoTitle || '(SEO TITLE - KEYWORD)'}
+On the header section start with the term ${fields.mainKeyword || '(MAIN KEYWORD)'} at the top left.
+ 
+Meta details:
+SEO Title: ${fields.seoTitle || '(SEO TITLE)'}
+SEO Description- ${fields.seoDescription || '(SEO Description)'}
+
+H1 should be the centered with the following: ${fields.pageTitle || '(TITLE OF YOUR PAGE)'}
+
+Create comprehensive, informative content that educates readers about ${fields.productName || fields.mainKeyword || '(TOPIC)'}.
+
+Inside the article - use this url ${fields.moneySiteUrl || '(YOUR MONEY SITE URL)'} with the Anchor ${fields.anchorText || '(YOUR DESIRED ANCHOR TEXT)'} in an area that makes sense
+
+Also link to this resource:${fields.additionalLink || '(LINK TO ADDITIONAL CLAUDE CODE PAGE OR HOME PAGE OF MONEY SITE)'} Using the anchor text ${fields.additionalAnchor || '(DESIRED ANCHOR)'}
+${getCommonPrompts(colors.main, colors.accent, fields.productName || fields.mainKeyword)}
+
+Use schema for FAQ and article details
+
+Create this as an artifact that can be published.
+
+The artifact and artifact id should be labeled clearly as ${fields.seoTitle || '(YOUR SEO TITLE)'}
+
+All for organization purposes. 
+
+Use lighter colors like white and gray. The Main Color should be ${colors.main}, with an accent color ${colors.accent}. The CTA should be ${colors.cta}`;
+            };
+
+            const generateLocalPrompt = () => {
+                return `I want to create a local business page for ${fields.seoTitle || '(SEO TITLE - KEYWORD)'}
+On the header section start with the term ${fields.mainKeyword || '(MAIN KEYWORD)'} at the top left and on the right have a call to action button that says "${fields.ctaPlaceholder}" that links to ${fields.affiliateLink || '(PHONE/CONTACT LINK)'}
+ 
+Meta details:
+SEO Title: ${fields.seoTitle || '(SEO TITLE)'}
+SEO Description- ${fields.seoDescription || '(SEO Description)'}
+
+H1 should be the centered with the following: ${fields.pageTitle || '(TITLE OF YOUR PAGE)'}
+
+Then a sentence below it that says
+
+Looking for the best ${fields.productName || '(SERVICE NAME)'} in [LOCATION]?
+Then have a call to action button below that says ("${fields.ctaText}") that links to ${fields.yourUrl || '(CONTACT URL)'} 
+
+Inside the article - use this url ${fields.moneySiteUrl || '(YOUR MONEY SITE URL)'} with the Anchor ${fields.anchorText || '(YOUR DESIRED ANCHOR TEXT)'} in an area that makes sense
+
+Also link to this resource:${fields.additionalLink || '(LINK TO ADDITIONAL CLAUDE CODE PAGE OR HOME PAGE OF MONEY SITE)'} Using the anchor text ${fields.additionalAnchor || '(DESIRED ANCHOR)'}
+${getCommonPrompts(colors.main, colors.accent, fields.productName)}
+
+Include local business schema, map integration, and contact information sections.
+
+End the article with another call to action like the one before but without using the H1 - instead use an H2 tag.
+
+Use schema for LocalBusiness, FAQ, and service details
+
+Create this as an artifact that can be published.
+
+The artifact and artifact id should be labeled clearly as ${fields.seoTitle || '(YOUR SEO TITLE)'}
+
+All for organization purposes. 
+
+Use lighter colors like white and gray. The Main Color should be ${colors.main}, with an accent color ${colors.accent}. The CTA should be ${colors.cta}`;
+            };
+
             const handleGeneratePrompt = () => {
                 let prompt = '';
                 
@@ -784,12 +881,10 @@ ${topProductsText || '\n{your url} {your anchor}\n{your url} {your anchor}\n{you
                         prompt = generateListiclePrompt();
                         break;
                     case 'informational':
-                        // Placeholder for informational prompt
-                        prompt = 'Informational prompt generator coming soon...';
+                        prompt = generateInformationalPrompt();
                         break;
                     case 'local':
-                        // Placeholder for local prompt
-                        prompt = 'Local prompt generator coming soon...';
+                        prompt = generateLocalPrompt();
                         break;
                     default:
                         prompt = generateReviewPrompt();
@@ -1281,13 +1376,165 @@ ${topProductsText || '\n{your url} {your anchor}\n{your url} {your anchor}\n{you
                         )
                     ),
 
-                    // Coming Soon Message for other types
-                    (promptType === 'informational' || promptType === 'local') && React.createElement('div', { style: { ...styles.section, textAlign: 'center', padding: '60px' } },
-                        React.createElement('h2', { style: { fontSize: '2rem', marginBottom: '16px', color: '#EC4899' } },
-                            promptType.charAt(0).toUpperCase() + promptType.slice(1) + ' Prompt Generator'
+                    // Informational and Local Content (now using the same fields as Review)
+                    (promptType === 'informational' || promptType === 'local') && React.createElement(React.Fragment, null,
+                        // Perplexity Input Section
+                        React.createElement('div', { style: styles.section },
+                            React.createElement('h2', { style: styles.sectionTitle },
+                                React.createElement(Icon, { type: 'alertCircle', size: 24, color: '#EC4899' }),
+                                'Import Perplexity Data'
+                            ),
+                            React.createElement('div', { style: { marginBottom: '12px', fontSize: '14px', color: '#9CA3AF' } },
+                                React.createElement('p', null, 'Paste your structured data below. The parser will extract:'),
+                                React.createElement('ul', { style: { listStyle: 'disc', listStylePosition: 'inside', marginTop: '4px', color: '#00D9FF' } },
+                                    React.createElement('li', null, 'SEO Title, Meta Description, H1'),
+                                    React.createElement('li', null, promptType === 'local' ? 'Business name, Keywords' : 'Topic/Subject, Keywords'),
+                                    React.createElement('li', null, 'URLs and color preferences')
+                                )
+                            ),
+                            React.createElement('textarea', {
+                                value: perplexityInput,
+                                onChange: (e) => setPerplexityInput(e.target.value),
+                                placeholder: 'Paste your Perplexity research data here...',
+                                style: styles.textarea
+                            }),
+                            React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '16px', marginTop: '12px' } },
+                                React.createElement('button', {
+                                    onClick: parsePerplexityData,
+                                    style: styles.button,
+                                    onMouseEnter: (e) => e.target.style.transform = 'scale(1.05)',
+                                    onMouseLeave: (e) => e.target.style.transform = 'scale(1)'
+                                }, 'Parse Data'),
+                                parseStatus && React.createElement('span', {
+                                    style: {
+                                        fontSize: '14px',
+                                        color: parseStatus.includes('✓') ? '#10B981' : '#FBBF24'
+                                    }
+                                }, parseStatus)
+                            )
                         ),
-                        React.createElement('p', { style: { fontSize: '1.125rem', color: '#9CA3AF' } },
-                            'Coming soon! This feature is under development.'
+
+                        // Color Customization
+                        React.createElement('div', { style: styles.sectionCyan },
+                            React.createElement('h2', { style: styles.sectionTitle },
+                                React.createElement(Icon, { type: 'palette', size: 24, color: '#EC4899' }),
+                                'Color Scheme'
+                            ),
+                            React.createElement('div', { style: styles.colorGrid },
+                                React.createElement('div', null,
+                                    React.createElement('label', { style: styles.label }, 'Main Color'),
+                                    React.createElement('input', {
+                                        type: 'text',
+                                        value: colors.main,
+                                        onChange: (e) => handleColorChange('main', e.target.value),
+                                        style: styles.input,
+                                        placeholder: 'e.g., blue'
+                                    })
+                                ),
+                                React.createElement('div', null,
+                                    React.createElement('label', { style: styles.label }, 'Accent Color'),
+                                    React.createElement('input', {
+                                        type: 'text',
+                                        value: colors.accent,
+                                        onChange: (e) => handleColorChange('accent', e.target.value),
+                                        style: styles.input,
+                                        placeholder: 'e.g., orange'
+                                    })
+                                ),
+                                React.createElement('div', null,
+                                    React.createElement('label', { style: styles.label }, 'CTA Color'),
+                                    React.createElement('input', {
+                                        type: 'text',
+                                        value: colors.cta,
+                                        onChange: (e) => handleColorChange('cta', e.target.value),
+                                        style: styles.input,
+                                        placeholder: 'e.g., red'
+                                    })
+                                )
+                            )
+                        ),
+
+                        // Fields Grid
+                        React.createElement('div', { style: styles.grid },
+                            Object.entries({
+                                'SEO Title': 'seoTitle',
+                                'Main Keyword': 'mainKeyword',
+                                'CTA Button Text': 'ctaPlaceholder',
+                                'Affiliate Link': 'affiliateLink',
+                                'SEO Description': 'seoDescription',
+                                'Page Title (H1)': 'pageTitle',
+                                [promptType === 'local' ? 'Business/Service Name' : 'Topic/Subject']: 'productName',
+                                'CTA Link Text': 'ctaText',
+                                'Your URL': 'yourUrl',
+                                'Money Site URL': 'moneySiteUrl',
+                                'Anchor Text': 'anchorText',
+                                'Additional Link': 'additionalLink',
+                                'Additional Anchor': 'additionalAnchor'
+                            }).map(([label, field]) =>
+                                React.createElement('div', {
+                                    key: field,
+                                    style: styles.gridItem,
+                                    onMouseEnter: (e) => e.currentTarget.style.borderColor = '#EC4899',
+                                    onMouseLeave: (e) => e.currentTarget.style.borderColor = '#00D9FF'
+                                },
+                                    React.createElement('label', { style: styles.label },
+                                        React.createElement(Icon, { type: 'edit3', size: 16 }),
+                                        label
+                                    ),
+                                    React.createElement('input', {
+                                        type: 'text',
+                                        value: fields[field],
+                                        onChange: (e) => handleFieldChange(field, e.target.value),
+                                        style: styles.input,
+                                        placeholder: `Enter ${label.toLowerCase()}...`,
+                                        onFocus: (e) => e.target.style.borderColor = '#00D9FF',
+                                        onBlur: (e) => e.target.style.borderColor = '#4B5563'
+                                    })
+                                )
+                            )
+                        ),
+
+                        // Additional URLs Section
+                        React.createElement('div', { style: styles.section },
+                            React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' } },
+                                React.createElement('h2', { style: { ...styles.sectionTitle, marginBottom: 0 } },
+                                    React.createElement(Icon, { type: 'plus', size: 20, color: '#EC4899' }),
+                                    'Additional URLs & Anchors'
+                                ),
+                                React.createElement('button', {
+                                    onClick: addAdditionalUrl,
+                                    style: { ...styles.button, background: 'linear-gradient(to right, #059669, #0891B2)' },
+                                    onMouseEnter: (e) => e.target.style.transform = 'scale(1.05)',
+                                    onMouseLeave: (e) => e.target.style.transform = 'scale(1)'
+                                },
+                                    React.createElement(Icon, { type: 'plus', size: 16, style: { display: 'inline', marginRight: '4px' } }),
+                                    'Add URL'
+                                )
+                            ),
+                            additionalUrls.map((item, index) =>
+                                React.createElement('div', { key: index, style: styles.additionalUrlRow },
+                                    React.createElement('input', {
+                                        type: 'text',
+                                        value: item.url,
+                                        onChange: (e) => updateAdditionalUrl(index, 'url', e.target.value),
+                                        style: { ...styles.input, flex: 1 },
+                                        placeholder: 'URL'
+                                    }),
+                                    React.createElement('input', {
+                                        type: 'text',
+                                        value: item.anchor,
+                                        onChange: (e) => updateAdditionalUrl(index, 'anchor', e.target.value),
+                                        style: { ...styles.input, flex: 1 },
+                                        placeholder: 'Anchor Text'
+                                    }),
+                                    React.createElement('button', {
+                                        onClick: () => removeAdditionalUrl(index),
+                                        style: styles.removeButton
+                                    },
+                                        React.createElement(Icon, { type: 'x', size: 16 })
+                                    )
+                                )
+                            )
                         )
                     ),
 
