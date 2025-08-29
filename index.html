@@ -603,9 +603,20 @@ Inside the article - use this url ${fields.moneySiteUrl || '(YOUR MONEY SITE URL
 
 Also link to this resource:${fields.additionalLink || '(LINK TO ADDITIONAL CLAUDE CODE PAGE OR HOME PAGE OF MONEY SITE)'} Using the anchor text ${fields.additionalAnchor || '(DESIRED ANCHOR)'}${additionalLinksText}
 
+**"ACCESSIBILITY & CONTRAST REQUIREMENTS: Ensure all text maintains proper contrast ratios for readability. Automatically apply the following rules:
+
+Dark backgrounds (blues, blacks, grays, dark colors): Use WHITE or very light text (#ffffff or #f8f9fa)
+Light backgrounds (whites, light grays, pastels): Use DARK text (#1f2937 or #374151)
+Medium backgrounds: Test contrast and choose appropriate light or dark text
+Colored containers: Always prioritize legibility over aesthetics - if background is dark/saturated, use white text; if light/pale, use dark text
+Interactive elements: Ensure hover states maintain proper contrast
+Minimum contrast ratio: Follow WCAG AA standards (4.5:1 for normal text, 3:1 for large text)
+
+Apply these rules automatically to ALL text elements including headings, paragraphs, links, and labels within any colored containers or sections. Use color: white !important; or color: #1f2937 !important; when needed to override conflicting styles."**
+
 Use graphs and charts to highlight the offer and benefits to break up the text for better readability.
 
-"Create pure CSS-based visual charts (no Chart.js or external libraries) that display actual data values. Requirements:
+Create pure CSS-based visual charts (no Chart.js or external libraries) that display actual data values. Requirements:
 
 Chart Types Needed: [specify: bar charts, pie charts, line charts, progress bars, etc.]
 Data to Display: [your specific data points and values]
