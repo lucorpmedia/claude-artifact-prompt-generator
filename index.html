@@ -1,20 +1,668 @@
-I want to use this article to build an optimized page for Bullion Max Review 2025: Is It Legit, Reliable, and Worth Your Money?
-On the header section start with the term Bullion Max review at the top left and on the right have a call to action button that says "Get Started Today" that links to (AFFILIATE LINK)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Artifact Prompt Generator</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        // Icon components
+        const Icon = ({ type, size = 20, color = "currentColor", style }) => {
+            const icons = {
+                sparkles: React.createElement('svg', { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: color, strokeWidth: "2", style: style },
+                    React.createElement('path', { d: "M12 3l1.912 5.813a2 2 0 0 0 1.275 1.275L21 12l-5.813 1.912a2 2 0 0 0-1.275 1.275L12 21l-1.912-5.813a2 2 0 0 0-1.275-1.275L3 12l5.813-1.912a2 2 0 0 0 1.275-1.275L12 3z" }),
+                    React.createElement('path', { d: "M5 3v4" }),
+                    React.createElement('path', { d: "M19 17v4" }),
+                    React.createElement('path', { d: "M3 5h4" }),
+                    React.createElement('path', { d: "M17 19h4" })
+                ),
+                code2: React.createElement('svg', { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: color, strokeWidth: "2", style: style },
+                    React.createElement('path', { d: "m18 16 4-4-4-4" }),
+                    React.createElement('path', { d: "m6 8-4 4 4 4" }),
+                    React.createElement('path', { d: "m14.5 4-5 16" })
+                ),
+                edit3: React.createElement('svg', { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: color, strokeWidth: "2" },
+                    React.createElement('path', { d: "M12 20h9" }),
+                    React.createElement('path', { d: "M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" })
+                ),
+                copy: React.createElement('svg', { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: color, strokeWidth: "2" },
+                    React.createElement('rect', { x: "9", y: "9", width: "13", height: "13", rx: "2", ry: "2" }),
+                    React.createElement('path', { d: "M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" })
+                ),
+                checkCircle: React.createElement('svg', { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: color, strokeWidth: "2" },
+                    React.createElement('path', { d: "M22 11.08V12a10 10 0 1 1-5.93-9.14" }),
+                    React.createElement('polyline', { points: "22 4 12 14.01 9 11.01" })
+                ),
+                alertCircle: React.createElement('svg', { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: color, strokeWidth: "2" },
+                    React.createElement('circle', { cx: "12", cy: "12", r: "10" }),
+                    React.createElement('line', { x1: "12", y1: "8", x2: "12", y2: "12" }),
+                    React.createElement('line', { x1: "12", y1: "16", x2: "12.01", y2: "16" })
+                ),
+                plus: React.createElement('svg', { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: color, strokeWidth: "2" },
+                    React.createElement('line', { x1: "12", y1: "5", x2: "12", y2: "19" }),
+                    React.createElement('line', { x1: "5", y1: "12", x2: "19", y2: "12" })
+                ),
+                x: React.createElement('svg', { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: color, strokeWidth: "2" },
+                    React.createElement('line', { x1: "18", y1: "6", x2: "6", y2: "18" }),
+                    React.createElement('line', { x1: "6", y1: "6", x2: "18", y2: "18" })
+                ),
+                palette: React.createElement('svg', { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: color, strokeWidth: "2" },
+                    React.createElement('circle', { cx: "13.5", cy: "6.5", r: ".5" }),
+                    React.createElement('circle', { cx: "17.5", cy: "10.5", r: ".5" }),
+                    React.createElement('circle', { cx: "8.5", cy: "7.5", r: ".5" }),
+                    React.createElement('circle', { cx: "6.5", cy: "12.5", r: ".5" }),
+                    React.createElement('path', { d: "M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" })
+                ),
+                fileText: React.createElement('svg', { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: color, strokeWidth: "2" },
+                    React.createElement('path', { d: "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" }),
+                    React.createElement('polyline', { points: "14 2 14 8 20 8" }),
+                    React.createElement('line', { x1: "16", y1: "13", x2: "8", y2: "13" }),
+                    React.createElement('line', { x1: "16", y1: "17", x2: "8", y2: "17" }),
+                    React.createElement('polyline', { points: "10 9 9 9 8 9" })
+                ),
+                list: React.createElement('svg', { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: color, strokeWidth: "2" },
+                    React.createElement('line', { x1: "8", y1: "6", x2: "21", y2: "6" }),
+                    React.createElement('line', { x1: "8", y1: "12", x2: "21", y2: "12" }),
+                    React.createElement('line', { x1: "8", y1: "18", x2: "21", y2: "18" }),
+                    React.createElement('line', { x1: "3", y1: "6", x2: "3.01", y2: "6" }),
+                    React.createElement('line', { x1: "3", y1: "12", x2: "3.01", y2: "12" }),
+                    React.createElement('line', { x1: "3", y1: "18", x2: "3.01", y2: "18" })
+                ),
+                info: React.createElement('svg', { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: color, strokeWidth: "2" },
+                    React.createElement('circle', { cx: "12", cy: "12", r: "10" }),
+                    React.createElement('line', { x1: "12", y1: "16", x2: "12", y2: "12" }),
+                    React.createElement('line', { x1: "12", y1: "8", x2: "12.01", y2: "8" })
+                ),
+                mapPin: React.createElement('svg', { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: color, strokeWidth: "2" },
+                    React.createElement('path', { d: "M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" }),
+                    React.createElement('circle', { cx: "12", cy: "10", r: "3" })
+                )
+            };
+            return icons[type] || null;
+        };
+
+        function ArticlePromptGenerator() {
+            const [promptType, setPromptType] = useState('review');
+            const [fields, setFields] = useState({
+                seoTitle: '',
+                mainKeyword: '',
+                ctaPlaceholder: 'Get Started Now',
+                affiliateLink: '',
+                seoDescription: '',
+                pageTitle: '',
+                productName: '',
+                ctaText: 'Click Here',
+                yourUrl: '',
+                moneySiteUrl: '',
+                anchorText: '',
+                additionalLink: '',
+                additionalAnchor: ''
+            });
+
+            const [listicleFields, setListicleFields] = useState({
+                seoTitle: '',
+                seoDescription: '',
+                mainKeyword: '',
+                h1Title: '',
+                topProducts: [
+                    { url: '', anchor: '' },
+                    { url: '', anchor: '' },
+                    { url: '', anchor: '' }
+                ],
+                additionalUrl: '',
+                additionalAnchor: ''
+            });
+
+            const [additionalUrls, setAdditionalUrls] = useState([]);
+            const [listicleAdditionalUrls, setListicleAdditionalUrls] = useState([]);
+            const [additionalProducts, setAdditionalProducts] = useState([]);
+            const [colors, setColors] = useState({
+                main: 'blue',
+                accent: 'orange',
+                cta: 'red'
+            });
+
+            const [perplexityInput, setPerplexityInput] = useState('');
+            const [listicleInput, setListicleInput] = useState('');
+            const [copied, setCopied] = useState(false);
+            const [showPrompt, setShowPrompt] = useState(false);
+            const [parseStatus, setParseStatus] = useState('');
+            const [generatedPrompt, setGeneratedPrompt] = useState('');
+
+            // Inline styles
+            const styles = {
+                container: {
+                    minHeight: '100vh',
+                    backgroundColor: '#000',
+                    color: '#00D9FF',
+                    padding: '16px',
+                    backgroundImage: `
+                        radial-gradient(circle at 20% 50%, rgba(120, 0, 255, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 0, 120, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, rgba(0, 255, 120, 0.2) 0%, transparent 50%)
+                    `,
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                },
+                maxWidth: {
+                    maxWidth: '1280px',
+                    margin: '0 auto'
+                },
+                title: {
+                    fontSize: 'clamp(2.5rem, 6vw, 4rem)',
+                    fontWeight: 'bold',
+                    marginBottom: '8px',
+                    background: 'linear-gradient(to right, #00D9FF, #A855F7, #EC4899)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                    textAlign: 'center'
+                },
+                subtitle: {
+                    color: '#C084FC',
+                    fontSize: '1.125rem',
+                    textAlign: 'center'
+                },
+                promptTypeSelector: {
+                    display: 'flex',
+                    justifyContent: 'center',
+                    gap: '16px',
+                    marginBottom: '32px',
+                    flexWrap: 'wrap'
+                },
+                promptTypeButton: {
+                    padding: '12px 24px',
+                    background: 'rgba(17, 24, 39, 0.8)',
+                    border: '2px solid #4B5563',
+                    borderRadius: '8px',
+                    color: '#9CA3AF',
+                    fontWeight: 'bold',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    fontSize: '16px'
+                },
+                promptTypeButtonActive: {
+                    background: 'linear-gradient(135deg, #9333EA, #EC4899)',
+                    border: '2px solid #EC4899',
+                    color: 'white',
+                    boxShadow: '0 10px 30px rgba(236, 72, 153, 0.3)'
+                },
+                section: {
+                    marginBottom: '32px',
+                    background: 'rgba(17, 24, 39, 0.8)',
+                    backdropFilter: 'blur(12px)',
+                    borderRadius: '8px',
+                    padding: '24px',
+                    border: '1px solid #A855F7',
+                    boxShadow: '0 10px 30px rgba(168, 85, 247, 0.2)'
+                },
+                sectionCyan: {
+                    marginBottom: '32px',
+                    background: 'rgba(17, 24, 39, 0.8)',
+                    backdropFilter: 'blur(12px)',
+                    borderRadius: '8px',
+                    padding: '24px',
+                    border: '1px solid #00D9FF',
+                    boxShadow: '0 10px 30px rgba(0, 217, 255, 0.2)'
+                },
+                sectionTitle: {
+                    fontSize: '1.5rem',
+                    fontWeight: 'bold',
+                    marginBottom: '16px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                },
+                textarea: {
+                    width: '100%',
+                    height: '160px',
+                    background: 'rgba(0, 0, 0, 0.5)',
+                    border: '1px solid #00D9FF',
+                    borderRadius: '4px',
+                    padding: '12px',
+                    color: '#00D9FF',
+                    fontSize: '14px',
+                    fontFamily: 'monospace',
+                    resize: 'vertical',
+                    outline: 'none'
+                },
+                input: {
+                    width: '100%',
+                    background: 'rgba(0, 0, 0, 0.5)',
+                    border: '1px solid #4B5563',
+                    borderRadius: '4px',
+                    padding: '8px 12px',
+                    color: '#00D9FF',
+                    outline: 'none'
+                },
+                button: {
+                    padding: '8px 24px',
+                    background: 'linear-gradient(to right, #9333EA, #EC4899)',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    borderRadius: '4px',
+                    border: 'none',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s',
+                    boxShadow: '0 10px 20px rgba(147, 51, 234, 0.3)'
+                },
+                generateButton: {
+                    padding: '12px 32px',
+                    background: 'linear-gradient(to right, #0891B2, #9333EA)',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    fontSize: '1.125rem',
+                    borderRadius: '8px',
+                    border: 'none',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s',
+                    boxShadow: '0 20px 40px rgba(8, 145, 178, 0.3)',
+                    transform: 'scale(1)',
+                    display: 'inline-block'
+                },
+                copyButton: {
+                    padding: '8px 16px',
+                    background: 'linear-gradient(to right, #059669, #0891B2)',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    borderRadius: '4px',
+                    border: 'none',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                },
+                grid: {
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                    gap: '24px',
+                    marginBottom: '32px'
+                },
+                gridItem: {
+                    background: 'rgba(17, 24, 39, 0.6)',
+                    backdropFilter: 'blur(8px)',
+                    borderRadius: '8px',
+                    padding: '16px',
+                    border: '1px solid #00D9FF',
+                    transition: 'border-color 0.3s'
+                },
+                label: {
+                    display: 'block',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    marginBottom: '8px',
+                    color: '#C084FC',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                },
+                codeBlock: {
+                    background: 'rgba(0, 0, 0, 0.5)',
+                    borderRadius: '4px',
+                    padding: '16px',
+                    color: '#00D9FF',
+                    fontSize: '14px',
+                    overflowX: 'auto',
+                    whiteSpace: 'pre-wrap',
+                    border: '1px solid #374151',
+                    fontFamily: 'monospace'
+                },
+                colorGrid: {
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                    gap: '16px'
+                },
+                additionalUrlRow: {
+                    display: 'flex',
+                    gap: '16px',
+                    marginBottom: '12px',
+                    alignItems: 'center'
+                },
+                removeButton: {
+                    padding: '8px 12px',
+                    background: '#DC2626',
+                    color: 'white',
+                    borderRadius: '4px',
+                    border: 'none',
+                    cursor: 'pointer'
+                },
+                comingSoonBadge: {
+                    fontSize: '12px',
+                    padding: '2px 8px',
+                    background: 'rgba(236, 72, 153, 0.2)',
+                    borderRadius: '4px',
+                    color: '#EC4899',
+                    marginLeft: '8px'
+                },
+                productGrid: {
+                    display: 'grid',
+                    gap: '16px',
+                    marginTop: '16px'
+                },
+                productItem: {
+                    background: 'rgba(17, 24, 39, 0.6)',
+                    borderRadius: '8px',
+                    padding: '16px',
+                    border: '1px solid #00D9FF'
+                }
+            };
+
+            const promptTypes = [
+                { id: 'review', name: 'Review', icon: 'fileText', available: true },
+                { id: 'listicle', name: 'Listicle', icon: 'list', available: true },
+                { id: 'informational', name: 'Informational', icon: 'info', available: false },
+                { id: 'local', name: 'Local', icon: 'mapPin', available: false }
+            ];
+
+            const handleFieldChange = (field, value) => {
+                setFields(prev => ({ ...prev, [field]: value }));
+            };
+
+            const handleListicleFieldChange = (field, value) => {
+                setListicleFields(prev => ({ ...prev, [field]: value }));
+            };
+
+            const handleTopProductChange = (index, field, value) => {
+                const updated = [...listicleFields.topProducts];
+                updated[index][field] = value;
+                setListicleFields(prev => ({ ...prev, topProducts: updated }));
+            };
+
+            const handleColorChange = (colorType, value) => {
+                setColors(prev => ({ ...prev, [colorType]: value }));
+            };
+
+            const addAdditionalUrl = () => {
+                setAdditionalUrls([...additionalUrls, { url: '', anchor: '' }]);
+            };
+
+            const removeAdditionalUrl = (index) => {
+                setAdditionalUrls(additionalUrls.filter((_, i) => i !== index));
+            };
+
+            const updateAdditionalUrl = (index, field, value) => {
+                const updated = [...additionalUrls];
+                updated[index][field] = value;
+                setAdditionalUrls(updated);
+            };
+
+            const addListicleAdditionalUrl = () => {
+                setListicleAdditionalUrls([...listicleAdditionalUrls, { url: '', anchor: '' }]);
+            };
+
+            const removeListicleAdditionalUrl = (index) => {
+                setListicleAdditionalUrls(listicleAdditionalUrls.filter((_, i) => i !== index));
+            };
+
+            const updateListicleAdditionalUrl = (index, field, value) => {
+                const updated = [...listicleAdditionalUrls];
+                updated[index][field] = value;
+                setListicleAdditionalUrls(updated);
+            };
+
+            const addAdditionalProduct = () => {
+                setAdditionalProducts([...additionalProducts, { url: '', anchor: '' }]);
+            };
+
+            const removeAdditionalProduct = (index) => {
+                setAdditionalProducts(additionalProducts.filter((_, i) => i !== index));
+            };
+
+            const updateAdditionalProduct = (index, field, value) => {
+                const updated = [...additionalProducts];
+                updated[index][field] = value;
+                setAdditionalProducts(updated);
+            };
+
+            const parsePerplexityData = () => {
+                setParseStatus('Parsing data...');
+                const text = perplexityInput;
+                const updatedFields = { ...fields };
+                const updatedColors = { ...colors };
+                let foundData = false;
+
+                // Extract SEO Title - handle multiple variations
+                const seoTitleMatch = text.match(/(?:SEO Title|Title Page|Title|Page Title|1\.\s*SEO Title|1\.\s*Title)[:\s]*\n?([^\n]+)/i);
+                if (seoTitleMatch) {
+                    updatedFields.seoTitle = seoTitleMatch[1].trim();
+                    foundData = true;
+                }
+
+                // Extract SEO Description - handle multiple variations
+                const seoDescMatch = text.match(/(?:SEO Meta Description|Meta Description|SEO Description|Description|2\.\s*SEO Meta Description|2\.\s*Meta Description|2\.\s*Description)[:\s]*\n?([^\n]+(?:\n[^\n]+)?)/i);
+                if (seoDescMatch) {
+                    updatedFields.seoDescription = seoDescMatch[1].trim().replace(/\n/g, ' ');
+                    foundData = true;
+                }
+
+                // Extract H1 (Page Title) - specifically look for H1
+                const h1Match = text.match(/(?:H1|3\.\s*H1)[:\s]*\n?([^\n]+)/i);
+                if (h1Match) {
+                    updatedFields.pageTitle = h1Match[1].trim();
+                    foundData = true;
+                }
+
+                // Extract product/company name from title or H1
+                let productName = '';
+                if (updatedFields.seoTitle) {
+                    const productFromTitle = updatedFields.seoTitle.match(/^([^:,\-]+)/);
+                    if (productFromTitle) {
+                        productName = productFromTitle[1].trim();
+                    }
+                } else if (updatedFields.pageTitle) {
+                    const productFromH1 = updatedFields.pageTitle.match(/^([^:,\-]+)/);
+                    if (productFromH1) {
+                        productName = productFromH1[1].trim();
+                    }
+                }
+                
+                // Look for company/product name in the text
+                const companyMatch = text.match(/(?:What is|Overview of|About)\s+([A-Z][^?\n.]+)/);
+                if (companyMatch) {
+                    productName = companyMatch[1].trim();
+                }
+
+                if (productName) {
+                    updatedFields.productName = productName;
+                    foundData = true;
+                }
+
+                // Extract main keyword
+                const keywordMatch = text.match(/(?:Key phrases?:|target keyword:|main keyword:)\s*([^,\n]+)/i);
+                if (keywordMatch) {
+                    updatedFields.mainKeyword = keywordMatch[1].trim();
+                    foundData = true;
+                } else if (productName) {
+                    updatedFields.mainKeyword = productName.toLowerCase();
+                    foundData = true;
+                }
+
+                // Extract URLs
+                const urlMatches = text.match(/https?:\/\/[^\s\)]+/g);
+                if (urlMatches && urlMatches.length > 0) {
+                    updatedFields.affiliateLink = urlMatches[0];
+                    updatedFields.yourUrl = urlMatches[0];
+                    updatedFields.moneySiteUrl = urlMatches[1] || urlMatches[0];
+                    if (urlMatches[2]) {
+                        updatedFields.additionalLink = urlMatches[2];
+                    }
+                    foundData = true;
+                }
+
+                // Set anchor text based on product name
+                if (productName && !updatedFields.anchorText) {
+                    updatedFields.anchorText = productName;
+                    updatedFields.additionalAnchor = `${productName} Review`;
+                }
+
+                // Extract colors if present
+                const mainColorMatch = text.match(/(?:main color|primary color)[:\s]*([^\n,]+)/i);
+                if (mainColorMatch) {
+                    updatedColors.main = mainColorMatch[1].trim().toLowerCase();
+                }
+
+                const accentColorMatch = text.match(/(?:accent color|secondary color)[:\s]*([^\n,]+)/i);
+                if (accentColorMatch) {
+                    updatedColors.accent = accentColorMatch[1].trim().toLowerCase();
+                }
+
+                const ctaColorMatch = text.match(/(?:cta color|button color|call.to.action color)[:\s]*([^\n,]+)/i);
+                if (ctaColorMatch) {
+                    updatedColors.cta = ctaColorMatch[1].trim().toLowerCase();
+                }
+
+                // Update CTA text based on context
+                if (text.toLowerCase().includes('review')) {
+                    updatedFields.ctaText = 'Read Full Review';
+                    updatedFields.ctaPlaceholder = 'Get Started Today';
+                }
+
+                setFields(updatedFields);
+                setColors(updatedColors);
+                
+                if (foundData) {
+                    setParseStatus('✓ Data parsed successfully!');
+                } else {
+                    setParseStatus('⚠ No structured data found. Check your input format.');
+                }
+
+                setTimeout(() => setParseStatus(''), 3000);
+            };
+
+            const parseListicleData = () => {
+                setParseStatus('Parsing listicle data...');
+                const text = listicleInput;
+                const updatedFields = { ...listicleFields };
+                let foundData = false;
+
+                // Extract SEO Title - handle multiple variations
+                const seoTitleMatch = text.match(/(?:SEO Title|Title Page|Title|Page Title)[:\s]*\n?([^\n]+)/i);
+                if (seoTitleMatch) {
+                    updatedFields.seoTitle = seoTitleMatch[1].trim();
+                    foundData = true;
+                }
+
+                // Extract SEO Description - handle multiple variations
+                const seoDescMatch = text.match(/(?:SEO Meta Description|Meta Description|SEO Description|Description)[:\s]*\n?([^\n]+(?:\n[^\n]+)?)/i);
+                if (seoDescMatch) {
+                    updatedFields.seoDescription = seoDescMatch[1].trim().replace(/\n/g, ' ');
+                    foundData = true;
+                }
+
+                // Extract H1 - specifically look for H1
+                const h1Match = text.match(/H1[:\s]*([^\n]+)/i);
+                if (h1Match) {
+                    updatedFields.h1Title = h1Match[1].trim();
+                    foundData = true;
+                }
+
+                // Extract main keyword from key phrases or context
+                const keywordMatch = text.match(/Key phrase[s]?[:\s]*"([^"]+)"/i) ||
+                                   text.match(/keyword\s*"([^"]+)"/i) ||
+                                   text.match(/(?:for|to rank for)\s*"([^"]+)"/i);
+                if (keywordMatch) {
+                    updatedFields.mainKeyword = keywordMatch[1];
+                    foundData = true;
+                } else if (updatedFields.seoTitle) {
+                    // Try to extract from SEO title
+                    const titleKeyword = updatedFields.seoTitle.match(/^([^:,\-]+)/);
+                    if (titleKeyword) {
+                        updatedFields.mainKeyword = titleKeyword[1].trim().toLowerCase();
+                    }
+                }
+
+                // Extract affiliate link
+                const affiliateLinkMatch = text.match(/affiliate link is\s*(https?:\/\/[^\s]+)/i);
+                if (affiliateLinkMatch) {
+                    // This will be used to construct the top product URLs
+                    const baseAffiliateUrl = affiliateLinkMatch[1];
+                    
+                    // Extract company names from H3 headers
+                    const h3Matches = text.match(/H3:\s*([^\n]+?)(?:\s*Review)?/gi);
+                    if (h3Matches && h3Matches.length >= 3) {
+                        h3Matches.slice(0, 3).forEach((match, index) => {
+                            const companyName = match.replace(/H3:\s*/i, '').replace(/\s*Review$/i, '').trim();
+                            updatedFields.topProducts[index] = {
+                                url: baseAffiliateUrl,
+                                anchor: companyName
+                            };
+                        });
+                        foundData = true;
+                    }
+                }
+
+                // Extract additional URLs if mentioned
+                const additionalUrlMatches = text.match(/(?:Also link to|link to this resource)[:\s]*([^\s]+)\s*(?:Using|with)\s*(?:the )?anchor text\s*([^\n]+)/i);
+                if (additionalUrlMatches) {
+                    updatedFields.additionalUrl = additionalUrlMatches[1];
+                    updatedFields.additionalAnchor = additionalUrlMatches[2].trim();
+                    foundData = true;
+                }
+
+                setListicleFields(updatedFields);
+                
+                if (foundData) {
+                    setParseStatus('✓ Listicle data parsed successfully!');
+                } else {
+                    setParseStatus('⚠ No structured data found. Check your input format.');
+                }
+
+                setTimeout(() => setParseStatus(''), 3000);
+            };
+
+            const generateReviewPrompt = () => {
+                let additionalLinksText = '';
+                if (additionalUrls.length > 0) {
+                    additionalLinksText = additionalUrls.map(item => 
+                        `\nAlso link to this resource: ${item.url || '(ADDITIONAL URL)'} Using the anchor text ${item.anchor || '(ANCHOR TEXT)'}`
+                    ).join('');
+                }
+
+                return `I want to use this article to build an optimized page for ${fields.seoTitle || '(SEO TITLE - KEYWORD)'}
+On the header section start with the term ${fields.mainKeyword || '(MAIN KEYWORD)'} at the top left and on the right have a call to action button that says "${fields.ctaPlaceholder}" that links to ${fields.affiliateLink || '(AFFILIATE LINK)'}
  
 Meta details:
-SEO Title: Bullion Max Review 2025: Is It Legit, Reliable, and Worth Your Money?
-SEO Description- Discover the facts about Bullion Max in this detailed 2025 review. Learn about its pricing, customer service, product selection, buyback program, pros, cons, and whether Bullion Max is a trustworthy platform for precious metals investing.
+SEO Title: ${fields.seoTitle || '(SEO TITLE)'}
+SEO Description- ${fields.seoDescription || '(SEO Description)'}
 
-H1 should be the centered with the following: Bullion Max Review 2025: Honest Buyer’s Guide
+H1 should be the centered with the following: ${fields.pageTitle || '(TITLE OF YOUR PAGE)'}
 
 Then a sentence below it that says
 
-Looking for the best offer for Bullion Max, Bullion Max company history, Bullion Max launch date?
-Then have a call to action button below that says ("Read Full Review") that links to (YOURURL) 
+Looking for the best offer for ${fields.productName || '(PRODUCT NAME)'}?
+Then have a call to action button below that says ("${fields.ctaText}") that links to ${fields.yourUrl || '(YOURURL)'} 
 
-Inside the article - use this url (YOUR MONEY SITE URL) with the Anchor Bullion Max, Bullion Max company history, Bullion Max launch date in an area that makes sense
+Inside the article - use this url ${fields.moneySiteUrl || '(YOUR MONEY SITE URL)'} with the Anchor ${fields.anchorText || '(YOUR DESIRED ANCHOR TEXT)'} in an area that makes sense
 
-Also link to this resource:(LINK TO ADDITIONAL CLAUDE CODE PAGE OR HOME PAGE OF MONEY SITE) Using the anchor text Bullion Max, Bullion Max company history, Bullion Max launch date Review
+Also link to this resource:${fields.additionalLink || '(LINK TO ADDITIONAL CLAUDE CODE PAGE OR HOME PAGE OF MONEY SITE)'} Using the anchor text ${fields.additionalAnchor || '(DESIRED ANCHOR)'}${additionalLinksText}
 
 **"ACCESSIBILITY & CONTRAST REQUIREMENTS: Ensure all text maintains proper contrast ratios for readability. Automatically apply the following rules:
 
@@ -61,10 +709,634 @@ Use schema for FAQ and product details
 
 Create this as an artifact that can be published.
 
-The artifact and artifact id should be labeled clearly as Bullion Max Review 2025: Is It Legit, Reliable, and Worth Your Money?
+The artifact and artifact id should be labeled clearly as ${fields.seoTitle || '(YOUR SEO TITLE)'}
 
-And user interface buttons that you label in the code - use the name Bullion Max Review 2025: Is It Legit, Reliable, and Worth Your Money? as they're name. 
+And user interface buttons that you label in the code - use the name ${fields.seoTitle || '(YOUR SEO TITLE)'} as they're name. 
 
 All for organization purposes. 
 
-Use lighter colors like white and gray. The Main Color should be blue, with an accent color orange. The CTA should be red
+Use lighter colors like white and gray. The Main Color should be ${colors.main}, with an accent color ${colors.accent}. The CTA should be ${colors.cta}`;
+            };
+
+            const generateListiclePrompt = () => {
+                // Build top 3 products text
+                let topProductsText = '';
+                listicleFields.topProducts.forEach((product, index) => {
+                    if (product.url || product.anchor) {
+                        topProductsText += `\n${product.url || '(URL ' + (index + 1) + ')'} ${product.anchor || '(ANCHOR ' + (index + 1) + ')'}`;
+                    }
+                });
+
+                // Add additional products to the list
+                additionalProducts.forEach((product, index) => {
+                    if (product.url || product.anchor) {
+                        topProductsText += `\n${product.url || '(ADDITIONAL PRODUCT URL ' + (index + 1) + ')'} ${product.anchor || '(ADDITIONAL PRODUCT ANCHOR ' + (index + 1) + ')'}`;
+                    }
+                });
+
+                // Build additional URLs text
+                let additionalLinksText = '';
+                if (listicleFields.additionalUrl || listicleFields.additionalAnchor) {
+                    additionalLinksText = `\n\nPlease also insert this URL ${listicleFields.additionalUrl || '(YOUR URL)'} with this ${listicleFields.additionalAnchor || '(ANCHOR)'} where it makes sense`;
+                }
+                
+                if (listicleAdditionalUrls.length > 0) {
+                    listicleAdditionalUrls.forEach(item => {
+                        if (item.url || item.anchor) {
+                            additionalLinksText += `\n\nPlease also insert this URL ${item.url || '(URL)'} with this ${item.anchor || '(ANCHOR)'} where it makes sense`;
+                        }
+                    });
+                }
+
+                return `Now I want to use that same article to build an SEO optimized page artifact with the following: 
+
+SEO Title: ${listicleFields.seoTitle || '(From Perplexity)'} 
+SEO description: ${listicleFields.seoDescription || '(from Perplexity)'}
+
+On the header section start with the term ${listicleFields.mainKeyword || '(PRIMARY MAIN KEYWORD-Not the suggested title)'} at the top left. 
+
+H1 should be the centered with the following: ${listicleFields.h1Title || '(H1 Title from Perplexity)'}
+
+Have the top 3 with the  "Add to Cart" that links to urls listed at the bottom of this like you'd see with an affiliate top rated page with stars. 
+
+Keep the colors light and gray. Main colors should be ${colors.main}, accent color ${colors.accent} and CTA ${colors.cta}.
+
+Use tables to help with readability and highlight important points of the article. 
+
+Use Schema for FAQ and pricing details.
+
+Be sure to name the artifact and artifact id the following: ${listicleFields.seoTitle || '(YOUR SEO TITLE)'}
+
+This is for our organization purposes
+
+Here are links for the top rated products:
+${topProductsText || '\n{your url} {your anchor}\n{your url} {your anchor}\n{your url} {your anchor}'}${additionalLinksText}`;
+            };
+
+            const handleGeneratePrompt = () => {
+                let prompt = '';
+                
+                switch (promptType) {
+                    case 'review':
+                        prompt = generateReviewPrompt();
+                        break;
+                    case 'listicle':
+                        prompt = generateListiclePrompt();
+                        break;
+                    case 'informational':
+                        // Placeholder for informational prompt
+                        prompt = 'Informational prompt generator coming soon...';
+                        break;
+                    case 'local':
+                        // Placeholder for local prompt
+                        prompt = 'Local prompt generator coming soon...';
+                        break;
+                    default:
+                        prompt = generateReviewPrompt();
+                }
+
+                setGeneratedPrompt(prompt);
+                setShowPrompt(true);
+            };
+
+            const copyToClipboard = () => {
+                navigator.clipboard.writeText(generatedPrompt);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+            };
+
+            return React.createElement('div', { style: styles.container },
+                React.createElement('div', { style: styles.maxWidth },
+                    // Header
+                    React.createElement('div', { style: { marginBottom: '32px', textAlign: 'center' } },
+                        React.createElement('h1', { style: styles.title }, 'Claude Artifact Prompt Generator'),
+                        React.createElement('p', { style: styles.subtitle }, 'Multi-Type Artifact Prompt Builder'),
+                        React.createElement('div', { style: { display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '16px' } },
+                            React.createElement(Icon, { type: 'sparkles', size: 20, color: '#EC4899', style: { animation: 'pulse 2s infinite' } }),
+                            React.createElement(Icon, { type: 'code2', size: 20, color: '#00D9FF', style: { animation: 'pulse 2s infinite' } }),
+                            React.createElement(Icon, { type: 'sparkles', size: 20, color: '#A855F7', style: { animation: 'pulse 2s infinite' } })
+                        )
+                    ),
+
+                    // Prompt Type Selector
+                    React.createElement('div', { style: styles.promptTypeSelector },
+                        promptTypes.map(type => {
+                            const isActive = promptType === type.id;
+                            return React.createElement('button', {
+                                key: type.id,
+                                onClick: () => type.available && setPromptType(type.id),
+                                style: {
+                                    ...styles.promptTypeButton,
+                                    ...(isActive ? styles.promptTypeButtonActive : {}),
+                                    cursor: type.available ? 'pointer' : 'not-allowed',
+                                    opacity: type.available ? 1 : 0.6
+                                },
+                                disabled: !type.available
+                            },
+                                React.createElement(Icon, { type: type.icon, size: 20 }),
+                                type.name,
+                                !type.available && React.createElement('span', { style: styles.comingSoonBadge }, 'Coming Soon')
+                            );
+                        })
+                    ),
+
+                    // Review Content
+                    promptType === 'review' && React.createElement(React.Fragment, null,
+                        // Perplexity Input Section
+                        React.createElement('div', { style: styles.section },
+                            React.createElement('h2', { style: styles.sectionTitle },
+                                React.createElement(Icon, { type: 'alertCircle', size: 24, color: '#EC4899' }),
+                                'Import Perplexity Data'
+                            ),
+                            React.createElement('div', { style: { marginBottom: '12px', fontSize: '14px', color: '#9CA3AF' } },
+                                React.createElement('p', null, 'Paste your structured data below. The parser will extract:'),
+                                React.createElement('ul', { style: { listStyle: 'disc', listStylePosition: 'inside', marginTop: '4px', color: '#00D9FF' } },
+                                    React.createElement('li', null, 'SEO Title, Meta Description, H1'),
+                                    React.createElement('li', null, 'Product/Company names, Keywords'),
+                                    React.createElement('li', null, 'URLs and color preferences')
+                                )
+                            ),
+                            React.createElement('textarea', {
+                                value: perplexityInput,
+                                onChange: (e) => setPerplexityInput(e.target.value),
+                                placeholder: 'Paste your Perplexity research data here...',
+                                style: styles.textarea
+                            }),
+                            React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '16px', marginTop: '12px' } },
+                                React.createElement('button', {
+                                    onClick: parsePerplexityData,
+                                    style: styles.button,
+                                    onMouseEnter: (e) => e.target.style.transform = 'scale(1.05)',
+                                    onMouseLeave: (e) => e.target.style.transform = 'scale(1)'
+                                }, 'Parse Data'),
+                                parseStatus && React.createElement('span', {
+                                    style: {
+                                        fontSize: '14px',
+                                        color: parseStatus.includes('✓') ? '#10B981' : '#FBBF24'
+                                    }
+                                }, parseStatus)
+                            )
+                        ),
+
+                        // Color Customization
+                        React.createElement('div', { style: styles.sectionCyan },
+                            React.createElement('h2', { style: styles.sectionTitle },
+                                React.createElement(Icon, { type: 'palette', size: 24, color: '#EC4899' }),
+                                'Color Scheme'
+                            ),
+                            React.createElement('div', { style: styles.colorGrid },
+                                React.createElement('div', null,
+                                    React.createElement('label', { style: styles.label }, 'Main Color'),
+                                    React.createElement('input', {
+                                        type: 'text',
+                                        value: colors.main,
+                                        onChange: (e) => handleColorChange('main', e.target.value),
+                                        style: styles.input,
+                                        placeholder: 'e.g., blue'
+                                    })
+                                ),
+                                React.createElement('div', null,
+                                    React.createElement('label', { style: styles.label }, 'Accent Color'),
+                                    React.createElement('input', {
+                                        type: 'text',
+                                        value: colors.accent,
+                                        onChange: (e) => handleColorChange('accent', e.target.value),
+                                        style: styles.input,
+                                        placeholder: 'e.g., orange'
+                                    })
+                                ),
+                                React.createElement('div', null,
+                                    React.createElement('label', { style: styles.label }, 'CTA Color'),
+                                    React.createElement('input', {
+                                        type: 'text',
+                                        value: colors.cta,
+                                        onChange: (e) => handleColorChange('cta', e.target.value),
+                                        style: styles.input,
+                                        placeholder: 'e.g., red'
+                                    })
+                                )
+                            )
+                        ),
+
+                        // Fields Grid
+                        React.createElement('div', { style: styles.grid },
+                            Object.entries({
+                                'SEO Title': 'seoTitle',
+                                'Main Keyword': 'mainKeyword',
+                                'CTA Button Text': 'ctaPlaceholder',
+                                'Affiliate Link': 'affiliateLink',
+                                'SEO Description': 'seoDescription',
+                                'Page Title (H1)': 'pageTitle',
+                                'Product Name': 'productName',
+                                'CTA Link Text': 'ctaText',
+                                'Your URL': 'yourUrl',
+                                'Money Site URL': 'moneySiteUrl',
+                                'Anchor Text': 'anchorText',
+                                'Additional Link': 'additionalLink',
+                                'Additional Anchor': 'additionalAnchor'
+                            }).map(([label, field]) =>
+                                React.createElement('div', {
+                                    key: field,
+                                    style: styles.gridItem,
+                                    onMouseEnter: (e) => e.currentTarget.style.borderColor = '#EC4899',
+                                    onMouseLeave: (e) => e.currentTarget.style.borderColor = '#00D9FF'
+                                },
+                                    React.createElement('label', { style: styles.label },
+                                        React.createElement(Icon, { type: 'edit3', size: 16 }),
+                                        label
+                                    ),
+                                    React.createElement('input', {
+                                        type: 'text',
+                                        value: fields[field],
+                                        onChange: (e) => handleFieldChange(field, e.target.value),
+                                        style: styles.input,
+                                        placeholder: `Enter ${label.toLowerCase()}...`,
+                                        onFocus: (e) => e.target.style.borderColor = '#00D9FF',
+                                        onBlur: (e) => e.target.style.borderColor = '#4B5563'
+                                    })
+                                )
+                            )
+                        ),
+
+                        // Additional URLs Section
+                        React.createElement('div', { style: styles.section },
+                            React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' } },
+                                React.createElement('h2', { style: { ...styles.sectionTitle, marginBottom: 0 } },
+                                    React.createElement(Icon, { type: 'plus', size: 20, color: '#EC4899' }),
+                                    'Additional URLs & Anchors'
+                                ),
+                                React.createElement('button', {
+                                    onClick: addAdditionalUrl,
+                                    style: { ...styles.button, background: 'linear-gradient(to right, #059669, #0891B2)' },
+                                    onMouseEnter: (e) => e.target.style.transform = 'scale(1.05)',
+                                    onMouseLeave: (e) => e.target.style.transform = 'scale(1)'
+                                },
+                                    React.createElement(Icon, { type: 'plus', size: 16, style: { display: 'inline', marginRight: '4px' } }),
+                                    'Add URL'
+                                )
+                            ),
+                            additionalUrls.map((item, index) =>
+                                React.createElement('div', { key: index, style: styles.additionalUrlRow },
+                                    React.createElement('input', {
+                                        type: 'text',
+                                        value: item.url,
+                                        onChange: (e) => updateAdditionalUrl(index, 'url', e.target.value),
+                                        style: { ...styles.input, flex: 1 },
+                                        placeholder: 'URL'
+                                    }),
+                                    React.createElement('input', {
+                                        type: 'text',
+                                        value: item.anchor,
+                                        onChange: (e) => updateAdditionalUrl(index, 'anchor', e.target.value),
+                                        style: { ...styles.input, flex: 1 },
+                                        placeholder: 'Anchor Text'
+                                    }),
+                                    React.createElement('button', {
+                                        onClick: () => removeAdditionalUrl(index),
+                                        style: styles.removeButton
+                                    },
+                                        React.createElement(Icon, { type: 'x', size: 16 })
+                                    )
+                                )
+                            )
+                        )
+                    ),
+
+                    // Listicle Content
+                    promptType === 'listicle' && React.createElement(React.Fragment, null,
+                        // Listicle Input Section
+                        React.createElement('div', { style: styles.section },
+                            React.createElement('h2', { style: styles.sectionTitle },
+                                React.createElement(Icon, { type: 'list', size: 24, color: '#EC4899' }),
+                                'Import Listicle Data'
+                            ),
+                            React.createElement('div', { style: { marginBottom: '12px', fontSize: '14px', color: '#9CA3AF' } },
+                                React.createElement('p', null, 'Paste your listicle article data below. The parser will extract:'),
+                                React.createElement('ul', { style: { listStyle: 'disc', listStylePosition: 'inside', marginTop: '4px', color: '#00D9FF' } },
+                                    React.createElement('li', null, 'SEO Title & Description'),
+                                    React.createElement('li', null, 'H1 Title and Main Keyword'),
+                                    React.createElement('li', null, 'Top 3 Product Names'),
+                                    React.createElement('li', null, 'Affiliate and Additional URLs')
+                                )
+                            ),
+                            React.createElement('textarea', {
+                                value: listicleInput,
+                                onChange: (e) => setListicleInput(e.target.value),
+                                placeholder: 'Paste your listicle article data here...',
+                                style: styles.textarea
+                            }),
+                            React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: '16px', marginTop: '12px' } },
+                                React.createElement('button', {
+                                    onClick: parseListicleData,
+                                    style: styles.button,
+                                    onMouseEnter: (e) => e.target.style.transform = 'scale(1.05)',
+                                    onMouseLeave: (e) => e.target.style.transform = 'scale(1)'
+                                }, 'Parse Data'),
+                                parseStatus && React.createElement('span', {
+                                    style: {
+                                        fontSize: '14px',
+                                        color: parseStatus.includes('✓') ? '#10B981' : '#FBBF24'
+                                    }
+                                }, parseStatus)
+                            )
+                        ),
+
+                        // Color Customization
+                        React.createElement('div', { style: styles.sectionCyan },
+                            React.createElement('h2', { style: styles.sectionTitle },
+                                React.createElement(Icon, { type: 'palette', size: 24, color: '#EC4899' }),
+                                'Color Scheme'
+                            ),
+                            React.createElement('div', { style: styles.colorGrid },
+                                React.createElement('div', null,
+                                    React.createElement('label', { style: styles.label }, 'Main Color'),
+                                    React.createElement('input', {
+                                        type: 'text',
+                                        value: colors.main,
+                                        onChange: (e) => handleColorChange('main', e.target.value),
+                                        style: styles.input,
+                                        placeholder: 'e.g., blue'
+                                    })
+                                ),
+                                React.createElement('div', null,
+                                    React.createElement('label', { style: styles.label }, 'Accent Color'),
+                                    React.createElement('input', {
+                                        type: 'text',
+                                        value: colors.accent,
+                                        onChange: (e) => handleColorChange('accent', e.target.value),
+                                        style: styles.input,
+                                        placeholder: 'e.g., orange'
+                                    })
+                                ),
+                                React.createElement('div', null,
+                                    React.createElement('label', { style: styles.label }, 'CTA Color'),
+                                    React.createElement('input', {
+                                        type: 'text',
+                                        value: colors.cta,
+                                        onChange: (e) => handleColorChange('cta', e.target.value),
+                                        style: styles.input,
+                                        placeholder: 'e.g., red'
+                                    })
+                                )
+                            )
+                        ),
+
+                        // Basic Fields
+                        React.createElement('div', { style: styles.grid },
+                            React.createElement('div', { style: styles.gridItem },
+                                React.createElement('label', { style: styles.label },
+                                    React.createElement(Icon, { type: 'edit3', size: 16 }),
+                                    'SEO Title'
+                                ),
+                                React.createElement('input', {
+                                    type: 'text',
+                                    value: listicleFields.seoTitle,
+                                    onChange: (e) => handleListicleFieldChange('seoTitle', e.target.value),
+                                    style: styles.input,
+                                    placeholder: 'From Perplexity'
+                                })
+                            ),
+                            React.createElement('div', { style: styles.gridItem },
+                                React.createElement('label', { style: styles.label },
+                                    React.createElement(Icon, { type: 'edit3', size: 16 }),
+                                    'SEO Description'
+                                ),
+                                React.createElement('input', {
+                                    type: 'text',
+                                    value: listicleFields.seoDescription,
+                                    onChange: (e) => handleListicleFieldChange('seoDescription', e.target.value),
+                                    style: styles.input,
+                                    placeholder: 'From Perplexity'
+                                })
+                            ),
+                            React.createElement('div', { style: styles.gridItem },
+                                React.createElement('label', { style: styles.label },
+                                    React.createElement(Icon, { type: 'edit3', size: 16 }),
+                                    'Main Keyword'
+                                ),
+                                React.createElement('input', {
+                                    type: 'text',
+                                    value: listicleFields.mainKeyword,
+                                    onChange: (e) => handleListicleFieldChange('mainKeyword', e.target.value),
+                                    style: styles.input,
+                                    placeholder: 'Primary keyword (not the title)'
+                                })
+                            ),
+                            React.createElement('div', { style: styles.gridItem },
+                                React.createElement('label', { style: styles.label },
+                                    React.createElement(Icon, { type: 'edit3', size: 16 }),
+                                    'H1 Title'
+                                ),
+                                React.createElement('input', {
+                                    type: 'text',
+                                    value: listicleFields.h1Title,
+                                    onChange: (e) => handleListicleFieldChange('h1Title', e.target.value),
+                                    style: styles.input,
+                                    placeholder: 'From Perplexity'
+                                })
+                            )
+                        ),
+
+                        // Top 3 Products Section
+                        React.createElement('div', { style: styles.section },
+                            React.createElement('h2', { style: styles.sectionTitle },
+                                React.createElement(Icon, { type: 'list', size: 20, color: '#EC4899' }),
+                                'Top 3 Products'
+                            ),
+                            React.createElement('div', { style: styles.productGrid },
+                                listicleFields.topProducts.map((product, index) =>
+                                    React.createElement('div', { key: index, style: styles.productItem },
+                                        React.createElement('h3', { style: { fontSize: '16px', marginBottom: '12px', color: '#EC4899' } },
+                                            `Product #${index + 1}`
+                                        ),
+                                        React.createElement('div', { style: { display: 'flex', gap: '16px' } },
+                                            React.createElement('input', {
+                                                type: 'text',
+                                                value: product.url,
+                                                onChange: (e) => handleTopProductChange(index, 'url', e.target.value),
+                                                style: { ...styles.input, flex: 1 },
+                                                placeholder: 'Product URL'
+                                            }),
+                                            React.createElement('input', {
+                                                type: 'text',
+                                                value: product.anchor,
+                                                onChange: (e) => handleTopProductChange(index, 'anchor', e.target.value),
+                                                style: { ...styles.input, flex: 1 },
+                                                placeholder: 'Product Name/Anchor'
+                                            })
+                                        )
+                                    )
+                                )
+                            )
+                        ),
+
+                        // Additional Products Section
+                        React.createElement('div', { style: styles.section },
+                            React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' } },
+                                React.createElement('h2', { style: { ...styles.sectionTitle, marginBottom: 0 } },
+                                    React.createElement(Icon, { type: 'plus', size: 20, color: '#EC4899' }),
+                                    'Additional Products'
+                                ),
+                                React.createElement('button', {
+                                    onClick: addAdditionalProduct,
+                                    style: { ...styles.button, background: 'linear-gradient(to right, #059669, #0891B2)' },
+                                    onMouseEnter: (e) => e.target.style.transform = 'scale(1.05)',
+                                    onMouseLeave: (e) => e.target.style.transform = 'scale(1)'
+                                },
+                                    React.createElement(Icon, { type: 'plus', size: 16, style: { display: 'inline', marginRight: '4px' } }),
+                                    'Add Product'
+                                )
+                            ),
+                            additionalProducts.map((item, index) =>
+                                React.createElement('div', { key: index, style: styles.additionalUrlRow },
+                                    React.createElement('input', {
+                                        type: 'text',
+                                        value: item.url,
+                                        onChange: (e) => updateAdditionalProduct(index, 'url', e.target.value),
+                                        style: { ...styles.input, flex: 1 },
+                                        placeholder: 'Product URL'
+                                    }),
+                                    React.createElement('input', {
+                                        type: 'text',
+                                        value: item.anchor,
+                                        onChange: (e) => updateAdditionalProduct(index, 'anchor', e.target.value),
+                                        style: { ...styles.input, flex: 1 },
+                                        placeholder: 'Product Name'
+                                    }),
+                                    React.createElement('button', {
+                                        onClick: () => removeAdditionalProduct(index),
+                                        style: styles.removeButton
+                                    },
+                                        React.createElement(Icon, { type: 'x', size: 16 })
+                                    )
+                                )
+                            )
+                        ),
+
+                        // Additional Links Section
+                        React.createElement('div', { style: styles.section },
+                            React.createElement('h2', { style: styles.sectionTitle },
+                                React.createElement(Icon, { type: 'plus', size: 20, color: '#EC4899' }),
+                                'Additional Link'
+                            ),
+                            React.createElement('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' } },
+                                React.createElement('input', {
+                                    type: 'text',
+                                    value: listicleFields.additionalUrl,
+                                    onChange: (e) => handleListicleFieldChange('additionalUrl', e.target.value),
+                                    style: styles.input,
+                                    placeholder: 'Additional URL'
+                                }),
+                                React.createElement('input', {
+                                    type: 'text',
+                                    value: listicleFields.additionalAnchor,
+                                    onChange: (e) => handleListicleFieldChange('additionalAnchor', e.target.value),
+                                    style: styles.input,
+                                    placeholder: 'Anchor Text'
+                                })
+                            )
+                        ),
+
+                        // Extra Additional URLs
+                        React.createElement('div', { style: styles.section },
+                            React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' } },
+                                React.createElement('h2', { style: { ...styles.sectionTitle, marginBottom: 0 } },
+                                    React.createElement(Icon, { type: 'plus', size: 20, color: '#EC4899' }),
+                                    'Extra URLs & Anchors'
+                                ),
+                                React.createElement('button', {
+                                    onClick: addListicleAdditionalUrl,
+                                    style: { ...styles.button, background: 'linear-gradient(to right, #059669, #0891B2)' },
+                                    onMouseEnter: (e) => e.target.style.transform = 'scale(1.05)',
+                                    onMouseLeave: (e) => e.target.style.transform = 'scale(1)'
+                                },
+                                    React.createElement(Icon, { type: 'plus', size: 16, style: { display: 'inline', marginRight: '4px' } }),
+                                    'Add URL'
+                                )
+                            ),
+                            listicleAdditionalUrls.map((item, index) =>
+                                React.createElement('div', { key: index, style: styles.additionalUrlRow },
+                                    React.createElement('input', {
+                                        type: 'text',
+                                        value: item.url,
+                                        onChange: (e) => updateListicleAdditionalUrl(index, 'url', e.target.value),
+                                        style: { ...styles.input, flex: 1 },
+                                        placeholder: 'URL'
+                                    }),
+                                    React.createElement('input', {
+                                        type: 'text',
+                                        value: item.anchor,
+                                        onChange: (e) => updateListicleAdditionalUrl(index, 'anchor', e.target.value),
+                                        style: { ...styles.input, flex: 1 },
+                                        placeholder: 'Anchor Text'
+                                    }),
+                                    React.createElement('button', {
+                                        onClick: () => removeListicleAdditionalUrl(index),
+                                        style: styles.removeButton
+                                    },
+                                        React.createElement(Icon, { type: 'x', size: 16 })
+                                    )
+                                )
+                            )
+                        )
+                    ),
+
+                    // Coming Soon Message for other types
+                    (promptType === 'informational' || promptType === 'local') && React.createElement('div', { style: { ...styles.section, textAlign: 'center', padding: '60px' } },
+                        React.createElement('h2', { style: { fontSize: '2rem', marginBottom: '16px', color: '#EC4899' } },
+                            promptType.charAt(0).toUpperCase() + promptType.slice(1) + ' Prompt Generator'
+                        ),
+                        React.createElement('p', { style: { fontSize: '1.125rem', color: '#9CA3AF' } },
+                            'Coming soon! This feature is under development.'
+                        )
+                    ),
+
+                    // Generate Button
+                    React.createElement('div', { style: { textAlign: 'center', marginBottom: '32px' } },
+                        React.createElement('button', {
+                            onClick: handleGeneratePrompt,
+                            style: styles.generateButton,
+                            onMouseEnter: (e) => {
+                                e.target.style.transform = 'scale(1.05)';
+                                e.target.style.boxShadow = '0 25px 50px rgba(8, 145, 178, 0.4)';
+                            },
+                            onMouseLeave: (e) => {
+                                e.target.style.transform = 'scale(1)';
+                                e.target.style.boxShadow = '0 20px 40px rgba(8, 145, 178, 0.3)';
+                            }
+                        }, 'GENERATE PROMPT')
+                    ),
+
+                    // Generated Prompt Display
+                    showPrompt && React.createElement('div', { style: { ...styles.section, borderColor: '#EC4899', boxShadow: '0 10px 30px rgba(236, 72, 153, 0.2)' } },
+                        React.createElement('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' } },
+                            React.createElement('h3', { style: { ...styles.sectionTitle, color: '#EC4899', marginBottom: 0 } }, 'Generated Prompt'),
+                            React.createElement('button', {
+                                onClick: copyToClipboard,
+                                style: styles.copyButton
+                            },
+                                copied ? React.createElement(React.Fragment, null,
+                                    React.createElement(Icon, { type: 'checkCircle', size: 20 }),
+                                    'Copied!'
+                                ) : React.createElement(React.Fragment, null,
+                                    React.createElement(Icon, { type: 'copy', size: 20 }),
+                                    'Copy to Clipboard'
+                                )
+                            )
+                        ),
+                        React.createElement('pre', { style: styles.codeBlock }, generatedPrompt)
+                    ),
+
+                    // Footer
+                    React.createElement('div', { style: { marginTop: '48px', textAlign: 'center', color: '#6B7280', fontSize: '14px' } },
+                        React.createElement('p', null, 'Claude Artifact Prompt Generator | Multi-Type Artifact Builder')
+                    )
+                )
+            );
+        }
+
+        // Render the component
+        ReactDOM.render(React.createElement(ArticlePromptGenerator), document.getElementById('root'));
+    </script>
+</body>
+</html>
