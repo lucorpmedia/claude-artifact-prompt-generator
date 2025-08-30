@@ -808,66 +808,105 @@ ${topProductsText || '\n{your url} {your anchor}\n{your url} {your anchor}\n{you
             };
 
             const generateInformationalPrompt = () => {
-                return `I want to create an informational article page for ${fields.seoTitle || '(SEO TITLE - KEYWORD)'}
-On the header section start with the term ${fields.mainKeyword || '(MAIN KEYWORD)'} at the top left.
- 
-Meta details:
-SEO Title: ${fields.seoTitle || '(SEO TITLE)'}
-SEO Description- ${fields.seoDescription || '(SEO Description)'}
+                return `Now I want to use that same article to build an SEO optimized informational page artifact with the following:
+SEO Elements:
 
-H1 should be the centered with the following: ${fields.pageTitle || '(TITLE OF YOUR PAGE)'}
+SEO Title: ${fields.seoTitle || '(From Perplexity)'}
+SEO description: ${fields.seoDescription || '(from Perplexity)'}
 
-Create comprehensive, informative content that educates readers about ${fields.productName || fields.mainKeyword || '(TOPIC)'}.
+Header Structure:
 
-Inside the article - use this url ${fields.moneySiteUrl || '(YOUR MONEY SITE URL)'} with the Anchor ${fields.anchorText || '(YOUR DESIRED ANCHOR TEXT)'} in an area that makes sense
+Header section starts with the term ${fields.mainKeyword || '(PRIMARY MAIN KEYWORD-Not the suggested title)'} at the top left
+H1 should be centered with the following: ${fields.pageTitle || '(H1 Title from Perplexity)'}
 
-Also link to this resource:${fields.additionalLink || '(LINK TO ADDITIONAL CLAUDE CODE PAGE OR HOME PAGE OF MONEY SITE)'} Using the anchor text ${fields.additionalAnchor || '(DESIRED ANCHOR)'}
+Content Structure:
+Create an authoritative, educational resource that provides comprehensive information about the topic. Start with 1-2 introductory paragraphs, then include the Key Takeaways section, followed by the detailed informational content.
+Optional CTA Integration:
+If relevant to the topic, include strategic call-to-action elements such as:
+
+"Learn More" buttons linking to additional resources
+"Get Started" buttons for tools or services mentioned
+Newsletter signup for topic updates
+Resource download buttons
+Contact/consultation CTAs where appropriate
+
+Design Specifications:
+Keep the colors light and gray. Main colors should be ${colors.main}, accent color ${colors.accent}, and CTA/important highlights in ${colors.cta}.
 ${getCommonPrompts(colors.main, colors.accent, fields.productName || fields.mainKeyword)}
 
-Use schema for FAQ and article details
+Key Takeaways Section Placement:
+Position the Key Takeaways section AFTER the first 1-2 introductory paragraphs (not at the very beginning). This section should serve as a quick overview before diving into detailed content.
 
-Create this as an artifact that can be published.
+Content Enhancement:
 
-The artifact and artifact id should be labeled clearly as ${fields.seoTitle || '(YOUR SEO TITLE)'}
+Use tables to organize complex information, comparisons, and data points
+Create FAQ section with Schema markup for common questions about the topic
+Include relevant statistics and research citations
+Structure content for featured snippets and voice search optimization
 
-All for organization purposes. 
+Schema Implementation:
+Use Schema markup for:
 
-Use lighter colors like white and gray. The Main Color should be ${colors.main}, with an accent color ${colors.accent}. The CTA should be ${colors.cta}`;
+FAQ sections
+Statistical data
+Educational content
+Key facts and figures
+
+Artifact Naming:
+Name the artifact and artifact id: ${fields.seoTitle || '(YOUR SEO TITLE)'}
+This creates an authoritative, educational resource that ranks well while providing genuine value to users seeking information about the topic, with optional conversion opportunities where relevant.`;
             };
 
             const generateLocalPrompt = () => {
-                return `I want to create a local business page for ${fields.seoTitle || '(SEO TITLE - KEYWORD)'}
-On the header section start with the term ${fields.mainKeyword || '(MAIN KEYWORD)'} at the top left and on the right have a call to action button that says "${fields.ctaPlaceholder}" that links to ${fields.affiliateLink || '(PHONE/CONTACT LINK)'}
- 
-Meta details:
-SEO Title: ${fields.seoTitle || '(SEO TITLE)'}
-SEO Description- ${fields.seoDescription || '(SEO Description)'}
+                return `LOCAL BUSINESS SEO CONTENT PROMPT
+Now I want to use that same article to build an SEO optimized local business page artifact with the following:
+SEO Elements:
 
-H1 should be the centered with the following: ${fields.pageTitle || '(TITLE OF YOUR PAGE)'}
+SEO Title: ${fields.seoTitle || '(YOUR SEO TITLE)'}
+SEO description: ${fields.seoDescription || '(YOUR SEO DESCRIPTION)'}
 
-Then a sentence below it that says
+Header Structure:
 
-Looking for the best ${fields.productName || '(SERVICE NAME)'} in [LOCATION]?
-Then have a call to action button below that says ("${fields.ctaText}") that links to ${fields.yourUrl || '(CONTACT URL)'} 
+Header section starts with the term ${fields.mainKeyword || '(MAIN KEYWORD - Service + City)'} at the top left
+Call to action button link on the right that says "Click for Quote" that links to ${fields.yourUrl || '(YOUR SITE URL)'}
+H1 should be centered with the following: ${fields.seoTitle || '(SEO TITLE)'}
+Sentence below H1: "Get a quote from the top ${fields.productName || '(WHATEVER NICHE)'} company"
+Button right below that says "Click Here" that links to ${fields.yourUrl || '(YOUR SITE)'} - positioned 50px below the sentence
 
-Inside the article - use this url ${fields.moneySiteUrl || '(YOUR MONEY SITE URL)'} with the Anchor ${fields.anchorText || '(YOUR DESIRED ANCHOR TEXT)'} in an area that makes sense
+Content Structure:
+Create authoritative local business content that establishes expertise and trust. Start with 1-2 introductory paragraphs about your service and local area, then include the Key Takeaways section, followed by detailed service information.
+Design Specifications:
+Keep the colors light and gray with a hint of crimson as accent color.
+${getCommonPrompts('gray', 'crimson', fields.productName)}
 
-Also link to this resource:${fields.additionalLink || '(LINK TO ADDITIONAL CLAUDE CODE PAGE OR HOME PAGE OF MONEY SITE)'} Using the anchor text ${fields.additionalAnchor || '(DESIRED ANCHOR)'}
-${getCommonPrompts(colors.main, colors.accent, fields.productName)}
+Key Takeaways Section Placement:
+Position the Key Takeaways section AFTER the first 1-2 introductory paragraphs (not at the very beginning). This section should highlight your local expertise and service benefits.
 
-Include local business schema, map integration, and contact information sections.
+Internal Linking:
+Find a strategic spot inside the content that links to ${fields.anchorText || '(YOUR KEYWORD)'} as the anchor text to the following URL: ${fields.moneySiteUrl || '(YOUR SITE URL)'}
+Content Enhancement:
 
-End the article with another call to action like the one before but without using the H1 - instead use an H2 tag.
+Use tables to organize service comparisons, pricing tiers, and local coverage areas
+Create FAQ section with Schema markup for common local service questions
+Include local statistics and service area information
+Structure content for local featured snippets and "near me" searches
 
-Use schema for LocalBusiness, FAQ, and service details
+Schema Implementation:
+Use Schema markup for:
 
-Create this as an artifact that can be published.
+FAQ sections
+Pricing details and service information
+Local business data
+Service area coverage
 
-The artifact and artifact id should be labeled clearly as ${fields.seoTitle || '(YOUR SEO TITLE)'}
+Optional Contact Information:
 
-All for organization purposes. 
+Phone Number: Include prominently if available: ${fields.affiliateLink || '(YOUR PHONE NUMBER)'}
+Google Maps: Insert the Google Maps URL for location visibility
 
-Use lighter colors like white and gray. The Main Color should be ${colors.main}, with an accent color ${colors.accent}. The CTA should be ${colors.cta}`;
+Artifact Naming:
+Name the artifact and artifact id: ${fields.seoTitle || '(YOUR SEO TITLE)'}
+This creates a locally-focused, conversion-optimized page that builds trust and authority while driving qualified leads for your local business.`;
             };
 
             const handleGeneratePrompt = () => {
@@ -1414,8 +1453,8 @@ Use lighter colors like white and gray. The Main Color should be ${colors.main},
                             )
                         ),
 
-                        // Color Customization
-                        React.createElement('div', { style: styles.sectionCyan },
+                        // Color Customization (conditional for Local)
+                        promptType !== 'local' && React.createElement('div', { style: styles.sectionCyan },
                             React.createElement('h2', { style: styles.sectionTitle },
                                 React.createElement(Icon, { type: 'palette', size: 24, color: '#EC4899' }),
                                 'Color Scheme'
@@ -1451,6 +1490,13 @@ Use lighter colors like white and gray. The Main Color should be ${colors.main},
                                         placeholder: 'e.g., red'
                                     })
                                 )
+                            )
+                        ),
+
+                        // Note for Local colors
+                        promptType === 'local' && React.createElement('div', { style: { ...styles.sectionCyan, textAlign: 'center', padding: '16px' } },
+                            React.createElement('p', { style: { color: '#9CA3AF' } }, 
+                                'Local pages use a fixed color scheme: Light gray with crimson accents'
                             )
                         ),
 
